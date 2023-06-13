@@ -8,10 +8,11 @@ class ClientsController < ApplicationController
     render json: @clients
   end
 
-  # GET /clients/1
-  def show
-    render json: @client
-  end
+ # GET /clients/1
+def show
+  @client = set_client
+  render json: @client
+end
 
   # POST /clients
   def create

@@ -8,8 +8,9 @@ class StaffsController < ApplicationController
     render json: @staffs
   end
 
-  # GET /staffs/1
+   # GET /staffs/1
   def show
+    @staff = set_staff
     render json: @staff
   end
 

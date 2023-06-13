@@ -8,8 +8,9 @@ class LeaveTypesController < ApplicationController
     render json: @leave_types
   end
 
-  # GET /leave_types/1
+   # GET /leave_types/1
   def show
+    @leave_type = set_leave_type
     render json: @leave_type
   end
 

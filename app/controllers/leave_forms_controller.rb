@@ -9,7 +9,9 @@ class LeaveFormsController < ApplicationController
   end
 
   # GET /leave_forms/1
+  # GET /leave_forms/1
   def show
+    @leave_form = set_leave_form
     render json: @leave_form
   end
 

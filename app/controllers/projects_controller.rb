@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @project = set_project
     render json: @project
   end
 

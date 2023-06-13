@@ -10,6 +10,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   def show
+    @task = set_task
     render json: @task
   end
 

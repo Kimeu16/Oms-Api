@@ -8,10 +8,11 @@ class TimesheetsController < ApplicationController
     render json: @timesheets
   end
 
-  # GET /timesheets/1
-  def show
-    render json: @timesheet
-  end
+ # GET /timesheets/1
+def show
+  @timesheet = set_timesheet
+  render json: @timesheet
+end
 
   # POST /timesheets
   def create

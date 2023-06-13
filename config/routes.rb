@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
-  resources :timesheets
-  resources :tasks
-  resources :staffs
-  resources :leave_forms
-  resources :projects
-  resources :leave_types
-  resources :clients
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :projects, only: [:index, :show]
+  resources :tasks, only: [:index, :show]
+  resources :staffs, only: [:index, :show]
+  resources :clients, only: [:index, :show]
+  resources :leave_forms, only: [:index, :show]
+  resources :leave_types, only: [:index, :show]
+  resources :timesheets, only: [:index, :show]
 end
