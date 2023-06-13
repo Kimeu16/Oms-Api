@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :timesheets
+  resources :tasks
+  resources :staffs
+  resources :leave_forms
   resources :projects
   resources :leave_types
   resources :clients

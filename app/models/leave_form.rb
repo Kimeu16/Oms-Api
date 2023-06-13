@@ -1,0 +1,2 @@
+class LeaveForm < ApplicationRecord
+end
