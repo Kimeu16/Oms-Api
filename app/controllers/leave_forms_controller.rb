@@ -1,14 +1,13 @@
 class LeaveFormsController < ApplicationController
-  before_action :set_leave_form, only: %i[ show update destroy ]
+  # before_action :authorize
+  # skip_before_action :authorize, only:[:index, :show]
 
-  # GET /leave_forms
+  # GET /LeaveForms
   def index
-    @leave_forms = LeaveForm.all
-
-    render json: @leave_forms
+    @leave_form = LeaveForm.all
+    render json: @leave_form
   end
 
-  # GET /leave_forms/1
   # GET /leave_forms/1
   def show
     @leave_form = set_leave_form
@@ -17,27 +16,22 @@ class LeaveFormsController < ApplicationController
 
   # POST /leave_forms
   def create
-    @leave_form = LeaveForm.new(leave_form_params)
-
-    if @leave_form.save
-      render json: @leave_form, status: :created, location: @leave_form
-    else
-      render json: @leave_form.errors, status: :unprocessable_entity
-    end
+    @leave_form = LeaveForm.create!(leave_form_params)
+    render json: @leave_form, status: :created
   end
 
   # PATCH/PUT /leave_forms/1
   def update
-    if @leave_form.update(leave_form_params)
-      render json: @leave_form
-    else
-      render json: @leave_form.errors, status: :unprocessable_entity
-    end
+    @leave_form = set_leave_form
+    @leave_form.update(leave_form_params)
+    render json: @leave_form, status: :created
   end
 
   # DELETE /leave_forms/1
   def destroy
+    @leave_form = set_leave_form
     @leave_form.destroy
+    head :no_content
   end
 
   private
@@ -48,6 +42,10 @@ class LeaveFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def leave_form_params
-      params.require(:leave_form).permit(:staff_id, :date_from, :date_to, :reason_for_leave, :leave_type)
+      params.permit(:staff_id, :date_from, :date_to, :reason_for_leave, :leave_type)
+    end
+
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
     end
 end

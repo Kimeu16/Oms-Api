@@ -1,11 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show update destroy ]
+  # before_action :authorize
+  # skip_before_action :authorize, only:[:index, :show]
 
   # GET /projects
   def index
-    @projects = Project.all
-
-    render json: @projects
+    @project = Project.all
+    render json: @project
   end
 
   # GET /projects/1
@@ -16,28 +16,24 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
-
-    if @project.save
-      render json: @project, status: :created, location: @project
-    else
-      render json: @project.errors, status: :unprocessable_entity
-    end
+    @project = Project.create!(project_params)
+    render json: @project, status: :created
   end
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      render json: @project
-    else
-      render json: @project.errors, status: :unprocessable_entity
-    end
+    @project = set_project
+    @project.update(leave_type_params)
+    render json: @project, status: :created
   end
 
   # DELETE /projects/1
   def destroy
+    @project = set_project
     @project.destroy
+    head :no_content
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -47,6 +43,10 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name, :client_name, :description, :action)
+      params.permit(:name, :client_name, :description, :action)
+    end
+
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
     end
 end

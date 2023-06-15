@@ -1,42 +1,37 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: %i[ show update destroy ]
+  before_action :authorize
+  skip_before_action :authorize, only:[:index, :show]
 
   # GET /clients
   def index
     @clients = Client.all
-
     render json: @clients
   end
 
- # GET /clients/1
-def show
-  @client = set_client
-  render json: @client
-end
+  # GET /clients/1
+  def show
+    @client = set_client
+    render json: @client
+  end
 
   # POST /clients
   def create
-    @client = Client.new(client_params)
-
-    if @client.save
-      render json: @client, status: :created, location: @client
-    else
-      render json: @client.errors, status: :unprocessable_entity
-    end
+    @client = Client.create!(client_params)
+    render json: @client, status: :created
   end
 
   # PATCH/PUT /clients/1
   def update
-    if @client.update(client_params)
-      render json: @client
-    else
-      render json: @client.errors, status: :unprocessable_entity
-    end
+    @client = set_client
+    @client.update(client_params)
+    render json: @client, status: :created
   end
 
   # DELETE /clients/1
   def destroy
+    @client = set_client
     @client.destroy
+    head :no_content
   end
 
   private
@@ -47,6 +42,10 @@ end
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:name, :description)
+      params.permit(:name, :description)
+    end
+
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
     end
 end

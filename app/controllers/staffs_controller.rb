@@ -1,14 +1,14 @@
 class StaffsController < ApplicationController
-  before_action :set_staff, only: %i[ show update destroy ]
+  # before_action :authorize
+  # skip_before_action :authorize, only:[:index, :show]
 
   # GET /staffs
   def index
-    @staffs = Staff.all
-
-    render json: @staffs
+    @staff = Staff.all
+    render json: @staff
   end
 
-   # GET /staffs/1
+  # GET /staffs/1
   def show
     @staff = set_staff
     render json: @staff
@@ -16,27 +16,22 @@ class StaffsController < ApplicationController
 
   # POST /staffs
   def create
-    @staff = Staff.new(staff_params)
-
-    if @staff.save
-      render json: @staff, status: :created, location: @staff
-    else
-      render json: @staff.errors, status: :unprocessable_entity
-    end
+    @staff = Staff.create!(staff_params)
+    render json: @staff, status: :created
   end
 
   # PATCH/PUT /staffs/1
   def update
-    if @staff.update(staff_params)
-      render json: @staff
-    else
-      render json: @staff.errors, status: :unprocessable_entity
-    end
+    @staff = set_staff
+    @staff.update(staff_params)
+    render json: @staff, status: :created
   end
 
   # DELETE /staffs/1
   def destroy
+    @staff = set_staff
     @staff.destroy
+    head :no_content
   end
 
   private
@@ -47,6 +42,12 @@ class StaffsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def staff_params
-      params.require(:staff).permit(:name, :joining_date, :reporting_to, :tech_stack)
+      params.permit(:name, :joining_date, :reporting_to, :tech_stack)
     end
+
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
+    end
+
+
 end

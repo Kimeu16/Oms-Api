@@ -1,42 +1,37 @@
 class TimesheetsController < ApplicationController
-  before_action :set_timesheet, only: %i[ show update destroy ]
+  before_action :authorize
+  skip_before_action :authorize, only:[:index, :show]
 
-  # GET /timesheets
+  # GET /timesheet
   def index
-    @timesheets = Timesheet.all
-
-    render json: @timesheets
+    @timesheet = Timesheet.all
+    render json: @timesheet
   end
 
- # GET /timesheets/1
-def show
-  @timesheet = set_timesheet
-  render json: @timesheet
-end
+  # GET /timesheet/1
+  def show
+    @timesheet = set_timesheet
+    render json: @timesheet
+  end
 
-  # POST /timesheets
+  # POST /timesheet
   def create
-    @timesheet = Timesheet.new(timesheet_params)
-
-    if @timesheet.save
-      render json: @timesheet, status: :created, location: @timesheet
-    else
-      render json: @timesheet.errors, status: :unprocessable_entity
-    end
+    @timesheet = Timesheet.create!(timesheet_params)
+    render json: @timesheet, status: :created
   end
 
-  # PATCH/PUT /timesheets/1
+  # PATCH/PUT /timesheet/1
   def update
-    if @timesheet.update(timesheet_params)
-      render json: @timesheet
-    else
-      render json: @timesheet.errors, status: :unprocessable_entity
-    end
+    @timesheet = set_timesheet
+    @timesheet.update(timesheet_params)
+    render json: @timesheet, status: :created
   end
 
-  # DELETE /timesheets/1
+  # DELETE /timesheet/1
   def destroy
+    @timesheet = set_timesheet
     @timesheet.destroy
+    head :no_content
   end
 
   private
@@ -47,6 +42,11 @@ end
 
     # Only allow a list of trusted parameters through.
     def timesheet_params
-      params.require(:timesheet).permit(:date, :start_time, :end_time, :task_id, :progress_details, :action)
+      params.permit(:date, :start_time, :end_time, :task_id, :progress_details, :action)
     end
+
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
+    end
+
 end
