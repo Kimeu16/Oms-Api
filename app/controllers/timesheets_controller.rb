@@ -42,7 +42,7 @@ class TimesheetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def timesheet_params
-      params.permit(:date, :start_time, :end_time, :task_id, :progress_details, :action)
+      params.permit(:date, :start_time, :end_time, :progress_details, :action)
     end
 
     def authorize

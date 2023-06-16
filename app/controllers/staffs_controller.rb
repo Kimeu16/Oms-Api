@@ -1,12 +1,16 @@
 class StaffsController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize ,only:[:show]
+  before_action :authorize
+  skip_before_action :authorize ,only:[:show]
 
   def index
-    staffs = Staff.all
-    render json: staffs
+    @staff = Staff.all
+    render json: @staff
   end
 
+  # def show
+  #   @staff = set_staff
+  #   render json: @staff
+  # end
 
 
 # signup request for staff
@@ -44,7 +48,7 @@ class StaffsController < ApplicationController
     end
 
     def staff_params
-      params.permit(:name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :isdmin, :admin_id)
+      params.permit(:name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :tech_stack, :isadmin, :admin_id)
     end
 
     def authorize

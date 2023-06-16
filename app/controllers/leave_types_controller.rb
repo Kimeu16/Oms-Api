@@ -42,10 +42,10 @@ class LeaveTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def leave_type_params
-      params.permit(:name, :days_allowed)
+      params.permit(:name, :days_allowed, :staff_id)
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
     end
 end

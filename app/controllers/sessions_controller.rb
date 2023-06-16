@@ -10,13 +10,13 @@ class SessionsController < ApplicationController
         render json: staff, status: :ok
 
       elsif admin&.authenticate(params[:password])
-        session[:student_id] = admin.id
+        session[:admin_id] = admin.id
         render json: admin, status: :ok
 
       else
         render json: { errors: 'Invalid Password or Username'}, status: :unauthorized
       end
-    end
+  end
 
 
     # DELETE '/logout'
@@ -34,11 +34,11 @@ class SessionsController < ApplicationController
 
       # session.delete :student_id || school_owner_id || educator_id
 
-    def destroy
-      session.delete :staff_id
-    end
+    # def destroy
+    #   session.delete :staff_id
+    # end
 
-    def destroy
-      session.delete :admin_id
-    end
+    # def destroy
+    #   session.delete :admin_id
+    # end
 end

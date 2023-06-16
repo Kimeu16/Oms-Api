@@ -16,7 +16,7 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.create!(staff_params)
+    @task = Task.create!(task_params)
     render json: @task, status: :created
   end
 
@@ -42,10 +42,10 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.permit(:project_id, :name, :assigned_to, :managed_by)
+      params.permit(:name, :assigned_to, :managed_by, :project_id)
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
     end
 end

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize, only:[:index, :show]
+  before_action :authorize
+  skip_before_action :authorize, only:[:index, :show]
 
   # GET /projects
   def index
@@ -43,10 +43,10 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.permit(:name, :client_name, :description, :action)
+      params.permit(:name, :client_name, :description, :action, :client_id)
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
     end
 end
