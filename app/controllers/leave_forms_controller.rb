@@ -1,11 +1,11 @@
 class LeaveFormsController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize, only:[:index, :show]
+  before_action :authorize
+  skip_before_action :authorize, only:[:index, :show]
 
   # GET /LeaveForms
   def index
-    @leave_form = LeaveForm.all
-    render json: @leave_form
+    leave_form = LeaveForm.all
+    render json: leave_form
   end
 
   # GET /leave_forms/1
@@ -16,7 +16,7 @@ class LeaveFormsController < ApplicationController
 
   # POST /leave_forms
   def create
-    @leave_form = LeaveForm.create!(leave_form_params)
+    @leave_form = LeaveForm.create(leave_form_params)
     render json: @leave_form, status: :created
   end
 
@@ -42,10 +42,10 @@ class LeaveFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def leave_form_params
-      params.permit(:staff_id, :date_from, :date_to, :reason_for_leave, :leave_type)
+      params.permit(:id, :date_from, :date_to, :reason_for_leave, :leave_type, :staff_id)
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
     end
 end
