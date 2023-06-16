@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
-
-
-  resources :projects, only: [:index, :show, :create]
+  resources :projects
   resources :tasks, only: [:index, :show]
-  resources :staffs, only: [:index, :show, :create, :update]
+  resources :staffs, only: [:index, :show]
   resources :clients, only: [:index, :show]
-  resources :leave_forms, only: [:index, :show]
-  resources :leave_types, only: [:index, :show]
-  resources :timesheets, only: [:index, :show]
+  resources :leave_forms
+  resources :leave_types
+  resources :timesheets
+  resources :admins, only: [:index, :show, :create, :destroy]
 
-  devise_for :users
+  post "/staff", to: "staffs#create"
+  post "/admin", to: "admin#create"
+  post "/login", to: "sessions#create"
+  get "/me", to: "staffs#show"
+  get "/mi", to: "admin#show"
 
-
+  delete "/logout", to: "sessions#destroy"
 end
