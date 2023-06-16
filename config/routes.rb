@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
   resources :projects
   resources :tasks, only: [:index, :show]
-  resources :staffs, only: [:index, :show]
+  resources :staffs
   resources :clients, only: [:index, :show]
-  resources :leave_forms
+  resources :leave_forms, only: [:index, :show, :create]
   resources :leave_types
   resources :timesheets
-  resources :admins, only: [:index, :show, :create, :destroy]
+  resources :admins
 
-  post "/staff", to: "staffs#create"
-  post "/admin", to: "admin#create"
+  post "/staffs", to: "staffs#create"
+  post "/admins", to: "admins#create"
   post "/login", to: "sessions#create"
   get "/me", to: "staffs#show"
-  get "/mi", to: "admin#show"
+  get "/mi", to: "admins#show"
 
   delete "/logout", to: "sessions#destroy"
 end

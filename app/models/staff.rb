@@ -3,7 +3,7 @@ class Staff < ApplicationRecord
 
   has_many :leave_forms
   # has_one :leave_type
-  # has_many :tasks
+  has_many :tasks
   belongs_to :admin
 
   validates :name, presence: true
@@ -12,4 +12,5 @@ class Staff < ApplicationRecord
   validates :tech_stack, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }
+  
 end
