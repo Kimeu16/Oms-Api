@@ -1,18 +1,18 @@
 class AdminsController < ApplicationController
 
   def index
-    admin = Admin.all
-    render json: admin
+    @admin = Admin.all
+    render json: @admin
   end
 
-# signup request for Admin
+#signup request for Admin
     def create
       admin = Admin.create(admin_params)
       if admin
         session[:admin_id] = admin.id
         render json: admin
       else
-        render json: { error: educator.errors.full_messages }, status: :unprocessable_entity
+        render json: { error: admin.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
@@ -40,6 +40,7 @@ class AdminsController < ApplicationController
     end
 
     def admin_params
-      params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :isdmin)
+      params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :isadmin)
     end
+
 end

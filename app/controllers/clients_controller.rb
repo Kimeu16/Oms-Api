@@ -46,6 +46,6 @@ class ClientsController < ApplicationController
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :client_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
     end
 end
