@@ -11,6 +11,20 @@ module Oms
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'https://oms-xt4c.vercel.app'  # Replace with your frontend origin
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
+      end
+    end
+
+    # config.middleware.use ActionDispatch::Cookies
+    # config.session_store :cookie_store, key: '_your_app_session'
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -18,12 +32,9 @@ module Oms
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    # require 'active_admin'
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
-    config.middleware.use ActionDispatch::Session::CookieStore
-
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
   end

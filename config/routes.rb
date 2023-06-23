@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :tasks, only: [:index, :show]
   resources :staffs
   resources :clients, only: [:index, :show]
-  resources :leave_forms, only: [:index, :show, :create]
+  resources :forms, only: [:index, :show, :create, :destroy]
   resources :leave_types
   resources :timesheets
   resources :admins
@@ -16,3 +16,4 @@ Rails.application.routes.draw do
 
   delete "/logout", to: "sessions#destroy"
 end
+

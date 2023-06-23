@@ -31,14 +31,4 @@ class SessionsController < ApplicationController
         render json: {errors: ["You must be logged in to access this content"] }, status: :unauthorized
       end
     end
-
-      # session.delete :student_id || school_owner_id || educator_id
-
-    # def destroy
-    #   session.delete :staff_id
-    # end
-
-    # def destroy
-    #   session.delete :admin_id
-    # end
 end

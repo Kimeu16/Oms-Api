@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize ,only:[:show]
+  skip_before_action :authorize
 
   def index
     @staff = Staff.all
@@ -15,7 +15,7 @@ class StaffsController < ApplicationController
 
 # signup request for staff
   def create
-    staff = Staff.create(staff_params)
+    staff = Staff.create!(staff_params)
     if staff
       session[:staff_id] = staff.id
       render json: staff
@@ -48,7 +48,11 @@ class StaffsController < ApplicationController
     end
 
     def staff_params
-      params.permit(:name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :tech_stack, :isadmin, :admin_id)
+      params.permit(:name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :tech_stack, :isStaff, :admin_id)
+    end
+
+    def authorize
+      return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :admin_id
     end
 
     def authorize

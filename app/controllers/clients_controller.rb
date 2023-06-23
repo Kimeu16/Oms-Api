@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show]
+  skip_before_action :authorize, only:[:show]
 
   # GET /clients
   def index

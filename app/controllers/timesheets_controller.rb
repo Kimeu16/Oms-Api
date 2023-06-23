@@ -1,6 +1,6 @@
 class TimesheetsController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show]
+  skip_before_action :authorize, only:[:index, :show, :create, :destroy]
 
   # GET /timesheet
   def index
@@ -16,7 +16,7 @@ class TimesheetsController < ApplicationController
 
   # POST /timesheet
   def create
-    @timesheet = Timesheet.create!(timesheet_params)
+    @timesheet = Timesheet.create(timesheet_params)
     render json: @timesheet, status: :created
   end
 
@@ -42,11 +42,11 @@ class TimesheetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def timesheet_params
-      params.permit(:date, :start_time, :end_time, :progress_details, :action)
+      params.permit(:id, :date, :start_time, :end_time, :progress_details, :task_id)
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
     end
 
 end

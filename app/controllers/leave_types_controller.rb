@@ -1,6 +1,6 @@
 class LeaveTypesController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show]
+  skip_before_action :authorize, only:[:index, :show, :create]
 
   # GET /LeaveTypes
   def index
@@ -46,6 +46,6 @@ class LeaveTypesController < ApplicationController
     end
 
     def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
     end
 end
