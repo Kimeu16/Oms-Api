@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
   end
 
   create_table "clients", force: :cascade do |t|
-    t.string "name"
+    t.string "client_name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
   end
 
   create_table "leave_types", force: :cascade do |t|
-    t.string "name"
+    t.string "your_name"
     t.integer "days_allowed"
     t.integer "staff_id", null: false
     t.datetime "created_at", null: false
@@ -47,17 +47,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "name"
+    t.string "project_name"
     t.string "client_name"
     t.text "description"
-    t.string "action"
     t.integer "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string "name"
+    t.string "staff_name"
     t.date "joining_date"
     t.string "reporting_to"
     t.string "email"
@@ -70,10 +69,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.integer "project_id"
-    t.string "name"
+    t.string "task_name"
     t.string "assigned_to"
     t.string "managed_by"
+    t.integer "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
