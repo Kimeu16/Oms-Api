@@ -1,5 +1,5 @@
 class LeaveTypeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :days_allowed
+  attributes :id, :your_name, :days_allowed
 
   belongs_to :staff
 end

@@ -15,7 +15,7 @@ class StaffsController < ApplicationController
 
 # signup request for staff
   def create
-    staff = Staff.create!(staff_params)
+    staff = Staff.create(staff_params)
     if staff
       session[:staff_id] = staff.id
       render json: staff
@@ -48,7 +48,7 @@ class StaffsController < ApplicationController
     end
 
     def staff_params
-      params.permit(:name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :tech_stack, :isStaff, :admin_id)
+      params.permit(:id, :staff_name, :joining_date, :reporting_to, :email, :password, :password_confirmation, :tech_stack, :isStaff, :admin_id)
     end
 
     def authorize

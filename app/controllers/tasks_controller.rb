@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show]
+  skip_before_action :authorize, only:[:show]
 
   # GET /tasks
   def index
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.permit(:name, :assigned_to, :managed_by, :project_id)
+      params.permit(:id, :task_name, :assigned_to, :managed_by, :project_id)
     end
 
     def authorize
