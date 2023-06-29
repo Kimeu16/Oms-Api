@@ -54,8 +54,4 @@ class StaffsController < ApplicationController
     def authorize
       return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :admin_id
     end
-
-    def authorize
-      return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :admin_id
-    end
 end

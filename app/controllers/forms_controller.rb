@@ -1,6 +1,6 @@
 class FormsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize, only:[:index, :show, :create]
+  # before_action :authorize
+  # skip_before_action :authorize, only:[:index, :show, :create]
 
 # GET /LeaveForms
 def index
@@ -16,7 +16,7 @@ end
 
 # POST /leave_forms
 def create
-  @form = Form.create(form_params)
+  @form = Form.create!(form_params)
   render json: @form, status: :created
 end
 
@@ -45,7 +45,7 @@ private
     params.permit(:id, :date_from, :date_to, :reason_for_leave, :leave_type, :staff_id)
   end
 
-  def authorize
-    return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
-  end
+  # def authorize
+  #   return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
+  # end
 end

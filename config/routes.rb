@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources :projects
-  resources :tasks, only: [:index, :show]
+  resources :tasks
   resources :staffs
-  resources :clients, only: [:index, :show]
-  resources :forms, only: [:index, :show, :create, :destroy]
+  resources :clients
+  resources :forms
   resources :leave_types
   resources :timesheets
   resources :admins

@@ -1,6 +1,6 @@
 class LeaveTypesController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show, :create]
+  skip_before_action :authorize, only:[:index, :show, :create, :destroy]
 
   # GET /LeaveTypes
   def index
@@ -16,7 +16,7 @@ class LeaveTypesController < ApplicationController
 
   # POST /leave_types
   def create
-    @leave_type = LeaveType.create!(leave_type_params)
+    @leave_type = LeaveType.create(leave_type_params)
     render json: @leave_type, status: :created
   end
 
@@ -42,7 +42,7 @@ class LeaveTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def leave_type_params
-      params.permit(:id, :staff_name, :days_allowed, :staff_id)
+      params.permit(:id, :your_name, :days_allowed, :staff_id)
     end
 
     def authorize

@@ -13,7 +13,7 @@ module Oms
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'https://oms-xt4c.vercel.app'  # Replace with your frontend origin
+        origins 'https://office-management-system.vercel.app'  # Replace with your frontend origin
         resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
       end
     end
