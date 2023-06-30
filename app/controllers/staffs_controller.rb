@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize
+  before_action :authorize
+  skip_before_action :authorize
 
   def index
     @staff = Staff.all
