@@ -11,13 +11,7 @@ module Oms
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins 'https://oms-api-production.up.railway.app'  # Replace with your frontend origin
-        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
-      end
-    end
-
+    
     # config.middleware.use ActionDispatch::Cookies
     # config.session_store :cookie_store, key: '_your_app_session'
 
