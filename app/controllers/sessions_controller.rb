@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   def create
       staff = Staff.find_by(email: params[:email])
       admin = Admin.find_by(email: params[:email])
+      
       if staff&.authenticate(params[:password])
         session[:staff_id] = staff.id
         render json: staff, status: :ok
