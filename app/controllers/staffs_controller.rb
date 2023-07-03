@@ -62,7 +62,7 @@ end
     pass = SecureRandom.alphanumeric(10)
     staff_pars = staff_params
     staff_pars[:password] = pass
-    
+
     staff = Staff.create!(staff_pars)
 
     email_hash = {
@@ -73,6 +73,7 @@ end
       body: "Password: #{pass}"
     }
 
+    
     if staff
       send_pass(email_hash)
 
