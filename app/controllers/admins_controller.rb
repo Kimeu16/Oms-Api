@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class AdminsController < ApplicationController
   # before_action :authorize
   # skip_before_action :authorize, only:[:show]
@@ -6,6 +8,8 @@ class AdminsController < ApplicationController
       @admin = Admin.all
       render json: @admin
     end
+
+    
 
   #signup request for Admin
       def create
@@ -45,4 +49,8 @@ class AdminsController < ApplicationController
         params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :isadmin)
       end
 
-end
+      def find_staff
+        Staff.find(params[:id])
+      end
+
+    end

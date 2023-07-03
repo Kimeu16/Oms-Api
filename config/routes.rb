@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "/me", to: "staffs#show"
   get "/mi", to: "admins#show"
 
+  get "/gen_pass/:id", to: "admins#gen_pass"
+
   delete "/logout", to: "sessions#destroy"
 end
 

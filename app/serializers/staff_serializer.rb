@@ -1,5 +1,5 @@
 class StaffSerializer < ActiveModel::Serializer
-  attributes :id, :staff_name, :joining_date, :reporting_to, :email, :password_digest, :tech_stack, :isStaff, :admin_id
+  attributes :id, :staff_name, :joining_date, :reporting_to, :email,  :tech_stack, :isStaff, :admin_id
 
   belongs_to :admin
   has_one :form
