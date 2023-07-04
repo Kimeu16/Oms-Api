@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
-  create_table "admins", force: :cascade do |t|
+  create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -21,14 +21,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "clients", force: :cascade do |t|
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "client_name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "forms", force: :cascade do |t|
+  create_table "forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date_from"
     t.date "date_to"
     t.text "reason_for_leave"
@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "leave_types", force: :cascade do |t|
+  create_table "leave_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "your_name"
     t.integer "days_allowed"
     t.integer "staff_id", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "projects", force: :cascade do |t|
+  create_table "projects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "project_name"
     t.string "client_name"
     t.text "description"
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "staffs", force: :cascade do |t|
+  create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "staff_name"
     t.date "joining_date"
     t.string "reporting_to"
@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "task_name"
     t.string "assigned_to"
     t.string "managed_by"
@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_075006) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "timesheets", force: :cascade do |t|
+  create_table "timesheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
     t.time "end_time"

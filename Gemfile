@@ -55,3 +55,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "mysql2", "~> 0.5.5"
