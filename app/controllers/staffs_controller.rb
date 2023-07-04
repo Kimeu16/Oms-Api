@@ -59,7 +59,7 @@ end
 
 # signup request for staff
   def create
-    pass = SecureRandom.alphanumeric(10)
+    pass = SecureRandom.alphanumeric(10).upcase
     staff_pars = staff_params
     staff_pars[:password] = pass
 
@@ -73,7 +73,7 @@ end
       body: "Password: #{pass}"
     }
 
-    
+
     if staff
       send_pass(email_hash)
 
