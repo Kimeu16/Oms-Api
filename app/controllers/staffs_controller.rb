@@ -78,7 +78,7 @@ end
       send_pass(email_hash)
 
       session[:staff_id] = staff.id
-      render json: staff
+      render json: {id: staff.id, staff_name: staff.staff_name, joining_date: staff.joining_date, reporting_to: staff.reporting_to, email: staff.email,tech_stack:staff.tech_stack}
     else
       render json: { error: staff.errors.full_messages }, status: :unprocessable_entity
     end
@@ -108,7 +108,7 @@ end
     end
 
     def staff_params
-      params.permit(:id, :staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id)
+      params.permit(:id, :staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
     end
 
     def authorize

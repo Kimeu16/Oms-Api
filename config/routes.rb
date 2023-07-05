@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :managers
   resources :projects
   resources :tasks
   resources :staffs

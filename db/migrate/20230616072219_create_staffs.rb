@@ -9,6 +9,7 @@ class CreateStaffs < ActiveRecord::Migration[7.0]
       t.text :tech_stack
       t.boolean :isStaff, default: true
       t.integer :admin_id, null: false, foreign_key: true
+      t.integer :manager_id, null: false, foreign_key: true
 
       t.timestamps
     end
