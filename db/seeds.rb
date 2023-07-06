@@ -13,7 +13,7 @@ leave_type1 = LeaveType.create(your_name: "Anthony Kimeu", days_allowed: 25, sta
 
 client1 = Client.create(client_name: "Maxxy", description: "Fully functional")
 
-project1 = Project.create(project_name: "Anthony", client_name: "Gideon", description: "Full Stack Project", client_id: client1)
+project1 = Project.create(project_name: "Anthony", description: "Full Stack Project", client_details: "bla bla bla")
 
 task1 = Task.create(task_name: "Office System", assigned_to: "Anthony", managed_by: "Project Manager", project_id: project1)
 

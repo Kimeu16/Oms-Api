@@ -56,9 +56,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_183411) do
 
   create_table "projects", charset: "utf8mb3", force: :cascade do |t|
     t.string "project_name"
-    t.string "client_name"
     t.text "description"
-    t.integer "client_id", null: false
+    t.string "client_details"
+    t.integer "client_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -71,8 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_183411) do
     t.string "password_digest"
     t.text "tech_stack"
     t.boolean "isStaff", default: true
-    t.integer "admin_id", null: false
-    t.integer "manager_id", null: false
+    t.integer "admin_id"
+    t.integer "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
