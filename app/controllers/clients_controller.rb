@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:show, :create, :destroy]
+  skip_before_action :authorize, only:[:show, :create, :destroy, :update]
 
   # GET /clients
   def index
@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
 
   # POST /clients
   def create
-    @client = Client.create!(client_params)
+    @client = Client.create(client_params)
     render json: @client, status: :created
   end
 
@@ -46,6 +46,6 @@ class ClientsController < ApplicationController
     end
 
     def authorize
-      # return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
     end
 end
