@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_05_183411) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -29,11 +29,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_183411) do
   end
 
   create_table "forms", charset: "utf8mb3", force: :cascade do |t|
+    t.date "your_name"
     t.date "date_from"
     t.date "date_to"
     t.text "reason_for_leave"
-    t.string "leave_type"
-    t.integer "staff_id", null: false
+    t.string "leaving_type"
+    t.integer "staff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "leave_calculations", charset: "utf8mb3", force: :cascade do |t|
+    t.string "staff_details"
+    t.string "type_of_leave"
+    t.integer "total_days"
+    t.integer "used_days"
+    t.integer "available_days"
+    t.integer "leave_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -41,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_183411) do
   create_table "leave_types", charset: "utf8mb3", force: :cascade do |t|
     t.string "your_name"
     t.integer "days_allowed"
-    t.integer "staff_id", null: false
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

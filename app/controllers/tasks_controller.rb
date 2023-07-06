@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize, only:[:show]
+  before_action :authorize
+  skip_before_action :authorize, only:[:index, :show]
 
   # GET /tasks
   def index
@@ -16,7 +16,7 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.create!(task_params)
+    @task = Task.create(task_params)
     render json: @task, status: :created
   end
 
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
       params.permit(:id, :task_name, :assigned_to, :managed_by, :project_id)
     end
 
-    # def authorize
-    #   return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :staff_id
-    # end
+    def authorize
+      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
+    end
 end

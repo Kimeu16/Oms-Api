@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :leave_calculations
   resources :managers
   resources :projects
   resources :tasks

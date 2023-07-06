@@ -42,7 +42,7 @@ private
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.permit(:id, :date_from, :date_to, :reason_for_leave, :leave_type, :staff_id)
+    params.permit(:id, :your_name, :date_from, :date_to, :reason_for_leave, :leaving_type, :staff_id)
   end
 
   # def authorize
