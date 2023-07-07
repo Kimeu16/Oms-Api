@@ -29,11 +29,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
   end
 
   create_table "forms", charset: "utf8mb3", force: :cascade do |t|
-    t.date "your_name"
+    t.string "your_name"
     t.date "date_from"
     t.date "date_to"
     t.text "reason_for_leave"
     t.string "leaving_type"
+    t.string "status", default: "pending"
     t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
   end
 
   create_table "leave_types", charset: "utf8mb3", force: :cascade do |t|
-    t.string "your_name"
+    t.string "leave_reason"
     t.integer "days_allowed"
     t.integer "staff_id"
     t.datetime "created_at", null: false

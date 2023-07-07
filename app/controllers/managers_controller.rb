@@ -1,6 +1,6 @@
 class ManagersController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:show, :create]
+  skip_before_action :authorize, only:[:show, :create, :destroy]
 
   # GET /  Managers
   def index

@@ -42,7 +42,7 @@ class LeaveTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def leave_type_params
-      params.permit(:id, :your_name, :days_allowed, :staff_id)
+      params.permit(:id, :leave_reason, :days_allowed, :staff_id)
     end
 
     def authorize

@@ -7,9 +7,9 @@ manager1 = Manager.create(first_name: "Anthony", last_name: "Kimeu", title: "CEO
 
 staff1 = Staff.create(staff_name: "Kimeu", joining_date: Date.tomorrow, reporting_to: "CEO", email: "gideon98@gmail.com", password: "password", tech_stack: "React & Rails", isStaff: true, admin_id: admin1, manager_id: manager1.id)
 
-leave_form1 = Form.create(date_from: Date.today, date_to: Date.tomorrow, reason_for_leave: "On Leave period", leaving_type: "Special", staff_id: staff1)
+leave_form1 = Form.create(date_from: Date.today, date_to: Date.tomorrow, reason_for_leave: "On Leave period", leaving_type: "Special", status: "pending", staff_id: staff1)
 
-leave_type1 = LeaveType.create(your_name: "Anthony Kimeu", days_allowed: 25, staff_id: staff1)
+leave_type1 = LeaveType.create(leave_reason: "Anthony Kimeu", days_allowed: 25, staff_id: staff1)
 
 leave_calculation1 = LeaveCalculation.create(staff_details: "Anthony Kimeu", type_of_leave: "sick", total_days: 20, used_days: 10, available_days: 10, leave_type_id: leave_type1.id)
 
