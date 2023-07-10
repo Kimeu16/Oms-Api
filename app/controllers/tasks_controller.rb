@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authorize
-  skip_before_action :authorize, only:[:index, :show]
+  skip_before_action :authorize, only:[:index, :show, :create, :destroy]
 
   # GET /tasks
   def index
