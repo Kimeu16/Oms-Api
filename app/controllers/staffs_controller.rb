@@ -9,32 +9,7 @@ class StaffsController < ApplicationController
     render json: @staff
   end
 
-  # def show
-  #   @staff = set_staff
-  #   render json: @staff
-  # end
 
-#   def send_pass(email, password)
-#     smtp_server = 'smtp.gmail.com'
-#     smtp_domain = 'gmail.com'
-#     smtp_port = 587
-#     smtp_username = 'ram.bharathbrands@gmail.com'
-#     smtp_password = 'eccfutcatpsykoho'
-
-# message = <<MESSAGE_END
-# From: Erick <#{smtp_username}>
-# To: Erick <#{email}>
-# Subject:  Password = #{password}
-
-# This is a test email sent via SMTP.
-# MESSAGE_END
-
-#     smtp = Net::SMTP.new(smtp_server, smtp_port)
-#     smtp.enable_starttls
-
-#     Net::SMTP.start(smtp_server, smtp_port, smtp_domain, smtp_username, smtp_password, :login, enable_starttls_auto: true) do |sm|
-#       sm.send_message(message, smtp_username, email)
-#     end
 
 
 def send_pass(email_hash)

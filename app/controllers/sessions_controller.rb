@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   def create
       staff = Staff.find_by(email: params[:email])
       admin = Admin.find_by(email: params[:email])
-      
+
       if staff&.authenticate(params[:password])
         session[:staff_id] = staff.id
         render json: staff, status: :ok
@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
         session.delete :admin_id
         head :no_content
       else
-        render json: {errors: ["You must be logged in to access this content"] }, status: :unauthorized
+        head :no_content
       end
     end
 end

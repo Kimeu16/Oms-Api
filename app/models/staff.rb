@@ -2,7 +2,7 @@ class Staff < ApplicationRecord
   has_secure_password
 
   belongs_to :admin, optional: true
-  belongs_to :manager, optional: true
+  belongs_to :manager,
   has_one :form
   has_one :leave_type
   # has_many :timesheets, through: :tasks
