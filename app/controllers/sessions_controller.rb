@@ -1,35 +1,23 @@
 class SessionsController < ApplicationController
-  #login
+  # skip_before_action :authenticate_admin, only: [:create]
 
-  # POST '/login'
   def create
-      staff = Staff.find_by(email: params[:email])
-      admin = Admin.find_by(email: params[:email])
+    staff = Staff.find_by_email(params[:email])
+    admin = Admin.find_by_email(params[:email])
 
-      if staff&.authenticate(params[:password])
-        session[:staff_id] = staff.id
-        render json: staff, status: :ok
-
-      elsif admin&.authenticate(params[:password])
-        session[:admin_id] = admin.id
-        render json: admin, status: :ok
-
-      else
-        render json: { errors: 'Invalid Password or Username'}, status: :unauthorized
-      end
+    if staff&.authenticate(params[:password])
+      token = jwt_encode(staff_id: staff.id)
+      render json: { token: token, isStaff: true }, status: :ok
+    elsif admin&.authenticate(params[:password])
+      token = jwt_encode(admin_id: admin.id)
+      render json: { token: token, isadmin: true }, status: :ok
+    else
+      render json: { errors: 'Invalid Password or Username' }, status: :unauthorized
+    end
   end
 
-
-    # DELETE '/logout'
-    def destroy
-      if session[:staff_id]
-        session.delete :staff_id
-        head :no_content
-      elsif session[:admin_id]
-        session.delete :admin_id
-        head :no_content
-      else
-        head :no_content
-      end
-    end
+  def destroy
+    # Token-based authentication doesn't require session deletion
+    head :no_content
+  end
 end

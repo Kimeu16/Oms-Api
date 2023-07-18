@@ -1,11 +1,15 @@
 class Staff < ApplicationRecord
+  require "securerandom"
   has_secure_password
 
   belongs_to :admin, optional: true
   belongs_to :manager, optional: true
   has_one :form
   has_one :leave_type
-  # has_many :timesheets, through: :tasks
+  has_one :leave_calculation
+  has_many :tasks, dependent: :destroy
+  has_many :projects, through: :tasks
+  has_many :timesheets
 
 
   validates :staff_name, presence: true

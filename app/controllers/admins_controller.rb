@@ -1,56 +1,53 @@
-require 'securerandom'
-
 class AdminsController < ApplicationController
-  # before_action :authorize
-  # skip_before_action :authorize, only:[:show]
+  before_action :deny_access, except: [:destroy, :create, :update, :show]
 
-    def index
-      @admin = Admin.all
-      render json: @admin
+  def index
+    admin = Admin.all
+    render json: admin, status: :ok
+  end
+
+  def create
+    admin = Admin.create(admin_params)
+    if admin.save
+      render json: admin, status: :created
+    else
+      render json: { error: admin.errors.full_messages }, status: :unprocessable_entity
     end
+  end
 
-    
+  def show
+    render json: admin, status: :ok
+  end
 
-  #signup request for Admin
-      def create
-        admin = Admin.create!(admin_params)
-        if admin
-          session[:admin_id] = admin.id
-          render json: admin
-        else
-          render json: { error: admin.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
-
-      # request me
-      def show
-          admin = Admin.find_by(id: session[:admin_id])
-          if admin
-            session[:admin_id] = admin.id
-            render json: admin
-          else
-            render json: { error: "unauthorized" }, status: :unauthorized
-          end
-      end
-
-      def destroy
-        @admin = set_admin
-        @admin.destroy
-        head :no_content
-      end
-
-    private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_admin
-        @admin = Admin.find(params[:id])
-      end
-
-      def admin_params
-        params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :isadmin)
-      end
-
-      def find_staff
-        Staff.find(params[:id])
-      end
-
+  def update
+    admin = set_admin
+    if admin.update(admin_params)
+      render json: admin
+    else
+      render json: { error: admin.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    admin.destroy
+    head :no_content
+  end
+
+  private
+
+  def set_admin
+    admin = Admin.find(params[:id])
+  end
+
+  def admin_params
+    params.permit(:id, :first_name, :last_name, :email, :password, :password_confirmation, :isadmin)
+  end
+
+  def deny_access
+    render_unauthorized unless authenticate_admin
+  end
+
+  def render_unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
+end

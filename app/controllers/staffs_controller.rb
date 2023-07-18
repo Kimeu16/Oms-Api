@@ -1,12 +1,12 @@
 require 'net/smtp'
 
 class StaffsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize
+  before_action :authenticate_staff, only: [:show, :create, :update, :destroy]
+  before_action :deny_access, only: [:destroy, :create, :update, :show]
 
   def index
     @staff = Staff.all
-    render json: @staff
+    render json: @staff, status: :ok
   end
 
 
@@ -77,16 +77,20 @@ end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_staff
-      @staff = Staff.find(params[:id])
-    end
+  def set_staff
+    staff = Staff.find[:id]
+  end
 
-    def staff_params
-      params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
-    end
+  def staff_params
+    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :password, :password_confirmation, :isStaff, :admin_id, :manager_id)
+  end
 
-    def authorize
-      return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :admin_id
-    end
+  def deny_access
+    render_unauthorized unless authenticate_admin
+  end
+
+  def render_unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
+
 end

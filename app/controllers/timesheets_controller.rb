@@ -1,52 +1,76 @@
 class TimesheetsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize, only:[:index, :show, :create, :destroy]
+  before_action :authenticate_staff, only: [:index, :show, :create, :update, :destroy]
+  # before_action :deny_access, only: [:destroy, :show]
 
-  # GET /timesheet
+  # GET /timesheets
   def index
-    @timesheet = Timesheet.all
-    render json: @timesheet
+    timesheets = @current_staff.timesheets # Retrieve timesheets associated with the current staff member
+    render json: timesheets, status: :ok
   end
 
-  # GET /timesheet/1
+  # GET /timesheets/1
   def show
-    @timesheet = set_timesheet
-    render json: @timesheet
+    if authenticate_staff
+      timesheet = @current_staff.timesheets.find_by(id: params[:id])
+      if timesheet
+        render json: timesheet
+      else
+        render json: { error: "Timesheet not found" }, status: :not_found
+      end
+    else
+      render_unauthorized
+    end
   end
 
-  # POST /timesheet
+
+  # POST /timesheets
   def create
-    @timesheet = Timesheet.create(timesheet_params)
-    render json: @timesheet, status: :created
+    timesheet = @current_staff.timesheets.build(timesheet_params)
+    timesheet.staff_id = @current_staff.id
+    if timesheet.save
+      render json: timesheet, status: :created
+    else
+      render json: { error: timesheet.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
-  # PATCH/PUT /timesheet/1
+
+  # PATCH/PUT /timesheets/1
   def update
-    @timesheet = set_timesheet
-    @timesheet.update(timesheet_params)
-    render json: @timesheet, status: :created
+    timesheet = current_staff.timesheets.find_by(id: params[:id])
+    if timesheet
+      if timesheet.update(timesheet_params)
+        render json: timesheet
+      else
+        render json: { error: timesheet.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: "Timesheet not found" }, status: :not_found
+    end
   end
 
-  # DELETE /timesheet/1
+  # DELETE /timesheets/1
   def destroy
-    @timesheet = set_timesheet
-    @timesheet.destroy
-    head :no_content
+    timesheet = current_staff.timesheets.find_by(id: params[:id])
+    if timesheet
+      timesheet.destroy
+      head :no_content
+    else
+      render json: { error: "Timesheet not found" }, status: :not_found
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_timesheet
-      @timesheet = Timesheet.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def timesheet_params
-      params.permit(:id, :date, :start_time, :end_time, :progress_details, :task_id)
-    end
+  def timesheet_params
+    params.permit(:date, :start_time, :end_time, :progress_details, :task_id, :staff_id)
+  end
 
-    def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
-    end
+  # def deny_access
+  #   render_unauthorized unless current_staff
+  # end
 
+  def render_unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
 end

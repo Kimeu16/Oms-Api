@@ -1,51 +1,64 @@
 class ProjectsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize, only:[:index, :show, :create, :destroy]
+  before_action :authenticate_staff, only: [:show]
+  before_action :deny_access, only: [:destroy, :create, :show, :update]
+
   # GET /projects
   def index
-    @project = Project.all
-    render json: @project
+    projects = Project.all
+    render json: projects
   end
 
   # GET /projects/1
   def show
-    @project = set_project
-    render json: @project
+    project = Project.find_by(id: params[:id])
+    if project
+      render json: project
+    else
+      render json: { error: "Project not found" }, status: :not_found
+    end
   end
 
   # POST /projects
   def create
-    @project = Project.create(project_params)
-    render json: @project, status: :created
+    project = Project.create(project_params)
+    render json: project, status: :created
   end
 
   # PATCH/PUT /projects/1
   def update
-    @project = set_project
-    @project.update(project_params)
-    render json: @project, status: :created
+    project = Project.find_by(id: params[:id])
+    if project
+      project.update(project_params)
+      render json: project, status: :created
+    else
+      render json: { error: "Project not found" }, status: :not_found
+    end
   end
 
   # DELETE /projects/1
   def destroy
-    @project = set_project
-    @project.destroy
-    head :no_content
+    project = Project.find_by(id: params[:id])
+    if project
+      project.destroy
+      head :no_content
+    else
+      render json: { error: "Project not found" }, status: :not_found
+    end
   end
 
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def project_params
-      params.permit(:project_name, :description, :client_details, :client_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def project_params
+    params.permit(:project_name, :description, :client_details, :client_id)
+  end
 
-    def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
-    end
+  def deny_access
+    render_unauthorized unless authenticate_admin
+  end
+
+  def render_unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
+  end
+
 end

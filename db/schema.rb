@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
     t.integer "used_days"
     t.integer "available_days"
     t.integer "leave_type_id"
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -94,7 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
     t.string "task_name"
     t.string "assigned_to"
     t.string "managed_by"
-    t.integer "project_id", null: false
+    t.integer "project_id"
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -105,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_141551) do
     t.time "end_time"
     t.text "progress_details"
     t.integer "task_id", null: false
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
-  before_action :authorize
-  skip_before_action :authorize, only:[:show, :create, :destroy, :update]
+  before_action :authenticate_staff
+  before_action :deny_access, only: [:destroy, :create, :update, :show]
 
   # GET /clients
   def index
@@ -45,7 +45,11 @@ class ClientsController < ApplicationController
       params.permit(:id, :client_name, :description)
     end
 
-    def authorize
-      return render json: { error: "Not authorized "}, status: :unauthorized unless session.include? :admin_id
+    def deny_access
+      render_unauthorized unless authenticate_admin
+    end
+
+    def render_unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
 end
