@@ -5,7 +5,7 @@ require "rails/all"
 
 Bundler.require(*Rails.groups)
 
-module OMS
+module Oms
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -17,7 +17,7 @@ module OMS
 
     Rails.application.config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://office-system-tan.vercel.app'  # Replace with your frontend origin
+        origins 'https://office-management-system.vercel.app'  # Replace with your frontend origin
         resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
       end
     end
