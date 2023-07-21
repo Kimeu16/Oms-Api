@@ -43,8 +43,14 @@ class ApplicationController < ActionController::API
     if decoded == "Token not found"
       render json: { error: 'Not Authenticated' }, status: :unauthorized
     else
-      @current_admin = Admin.find(decoded[:admin_id]) if decoded.key?(:admin_id)
+
+      admin_id = decoded[:admin_id] if decoded.key?(:admin_id)
+      @current_admin = Admin.find_by(id: admin_id)
     end
+  end
+
+  def current_admin
+    @current_admin ||= authenticate_admin
   end
 
 

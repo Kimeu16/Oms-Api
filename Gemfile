@@ -9,8 +9,6 @@ gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 
-gem 'mysql2'
-
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -44,6 +42,10 @@ gem "bootsnap", require: false
 
 # gem 'sidekiq-cron'
 gem 'jwt'
+
+gem 'carrierwave'
+
+gem 'mysql2'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible

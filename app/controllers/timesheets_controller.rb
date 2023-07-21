@@ -1,27 +1,33 @@
 class TimesheetsController < ApplicationController
-  before_action :authenticate_staff, only: [:index, :show, :create, :update, :destroy]
-  # before_action :deny_access, only: [:destroy, :show]
+  before_action :authenticate_staff, only: [:index, :show, :create, :update]
+  before_action :deny_access, only: [:destroy, :show]
 
   # GET /timesheets
-  def index
-    timesheets = @current_staff.timesheets # Retrieve timesheets associated with the current staff member
-    render json: timesheets, status: :ok
+  # GET /timesheets
+def index
+  if current_admin
+    timesheets = Timesheet.all
+  else
+    timesheets = @current_staff.timesheets
   end
 
+  render json: timesheets, status: :ok
+end
+
+
   # GET /timesheets/1
-  def show
-    if authenticate_staff
-      timesheet = @current_staff.timesheets.find_by(id: params[:id])
-      if timesheet
-        render json: timesheet
-      else
-        render json: { error: "Timesheet not found" }, status: :not_found
-      end
+def show
+  timesheet = Timesheet.find_by(id: params[:id])
+  if timesheet
+    if current_admin || timesheet.staff_id == @current_staff.id
+      render json: timesheet
     else
       render_unauthorized
     end
+  else
+    render json: { error: "Timesheet not found" }, status: :not_found
   end
-
+end
 
   # POST /timesheets
   def create
@@ -51,7 +57,7 @@ class TimesheetsController < ApplicationController
 
   # DELETE /timesheets/1
   def destroy
-    timesheet = current_staff.timesheets.find_by(id: params[:id])
+    timesheet = Timesheet.find_by(id: params[:id])
     if timesheet
       timesheet.destroy
       head :no_content
@@ -66,9 +72,9 @@ class TimesheetsController < ApplicationController
     params.permit(:date, :start_time, :end_time, :progress_details, :task_id, :staff_id)
   end
 
-  # def deny_access
-  #   render_unauthorized unless current_staff
-  # end
+  def deny_access
+    render_unauthorized unless current_admin
+  end
 
   def render_unauthorized
     render json: { error: 'Unauthorized' }, status: :unauthorized

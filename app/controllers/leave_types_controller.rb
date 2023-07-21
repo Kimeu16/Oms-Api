@@ -1,6 +1,6 @@
 class LeaveTypesController < ApplicationController
-  before_action :authenticate_staff, except: [:show]
-  before_action :deny_access, only: [:create, :destroy, :update]
+  before_action :authenticate_staff, only: [:show]
+  before_action :deny_access, only: [:create, :show, :destroy, :update]
 
   # GET /leave_types
   def index

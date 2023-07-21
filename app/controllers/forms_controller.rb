@@ -1,26 +1,36 @@
 class FormsController < ApplicationController
-  before_action :authenticate_staff, only: [:create]
-  before_action :deny_access, except: [:index, :show, :destroy, :update]
+  before_action :authenticate_staff, only: [:index, :show, :create]
+  before_action :deny_access, only: [:destroy, :show, :update]
 
   # GET /leave_forms
   def index
-    form = Form.all
-    render json: form, status: :ok
+    if current_admin
+      forms = Form.all
+    else
+      forms = @current_staff.forms
+    end
+
+    render json: forms, status: :ok
   end
 
     # GET /forms/1
     def show
       form = Form.find_by(id: params[:id])
       if form
-        render json: form
+        if current_admin || form.staff_id == @current_staff.id
+          render json: form
+        else
+          render_unauthorized
+        end
       else
-        render json: { error: "form not found" }, status: :not_found
+        render json: { error: "Timesheet not found" }, status: :not_found
       end
     end
 
     # POST /forms
     def create
-      form = Form.create(form_params)
+      form = @current_staff.forms.build(form_params)
+      form.staff_id = @current_staff.id
       if form.save
         render json: form, status: :created
       else
@@ -61,7 +71,7 @@ class FormsController < ApplicationController
   end
 
   def deny_access
-    render_unauthorized unless authenticate_staff
+    render_unauthorized unless current_admin
   end
 
   def render_unauthorized

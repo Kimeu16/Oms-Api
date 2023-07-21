@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :profiles
   resources :leave_calculations
   resources :managers
   resources :projects
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
       get 'tasks', to: 'staffs#tasks'
       get 'leave_calculations', to: 'staffs#leave_calculations'
       get 'timesheets', to: 'staffs#timesheets'
+      get 'profile', to: 'staffs#profile'
     end
   end
 

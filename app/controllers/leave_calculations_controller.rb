@@ -4,16 +4,24 @@ class LeaveCalculationsController < ApplicationController
 
   # GET /leave_calculations
   def index
-    # Restrict access to all staff leave calculations
-    leave_calculation = LeaveCalculation.all
-    render json: leave_calculation, status: :ok
+    if current_admin
+      leave_calculations = LeaveCalculation.all
+    else
+      leave_calculations = @current_staff.leave_calculations
+    end
+
+    render json: leave_calculations, status: :ok
   end
 
   # GET /leave_calculations/1
   def show
     leave_calculation = LeaveCalculation.find_by(id: params[:id])
     if leave_calculation
-      render json: leave_calculation
+      if current_admin || leave_calculation.staff_id == @current_staff.id
+        render json: leave_calculation
+      else
+        render_unauthorized
+      end
     else
       render json: { error: "Leave Calculation not found" }, status: :not_found
     end
@@ -60,7 +68,7 @@ class LeaveCalculationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def leave_calculation_params
-    params.permit(:staff_details, :type_of_leave, :total_days, :used_days, :available_days, :leave_type_id)
+    params.permit(:staff_details, :type_of_leave, :total_days, :used_days, :available_days, :leave_type_id, :staff_id)
   end
 
   # Update the leave days (used_days, available_days) based on total_days
