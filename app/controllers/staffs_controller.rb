@@ -54,7 +54,7 @@ class StaffsController < ApplicationController
   end
 
   def staff_params
-    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack,  :isStaff, :admin_id, :manager_id)
+    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack)
   end
 
   def deny_access
