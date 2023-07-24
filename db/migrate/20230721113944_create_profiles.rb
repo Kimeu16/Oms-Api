@@ -5,6 +5,9 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :avatar
       t.string :about
       t.string :location
+      t.string :bio_name
+      t.string :my_email
+      t.string :tech
       t.integer :staff_id, null: true, foreign_key: true
 
       t.timestamps

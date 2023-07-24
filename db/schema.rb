@@ -73,6 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.string "avatar"
     t.string "about"
     t.string "location"
+    t.string "bio_name"
+    t.string "my_email"
+    t.string "tech"
     t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

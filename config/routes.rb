@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   post "/admins", to: "admins#create"
   post "/login", to: "sessions#create"
   get "/me", to: "staffs#show"
-  get "/mi", to: "admins#show"
+  get "/mi", to: "admins#mi"
 
   get "/gen_pass/:id", to: "admins#gen_pass"
 

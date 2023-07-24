@@ -20,6 +20,6 @@ task1 = Task.create(task_name: "Office System", assigned_to: "Anthony", managed_
 
 timesheet1 = Timesheet.create(date: Date.today, start_time: Time.now, end_time: Time.now + 5.hours, progress_details: "In Progress", task_id: task1.id, staff_id: staff1.id)
 
-profile1 = Profile.create(bio: "Software Engineer # FullStack Engineer", avatar: "", about:"", location:"", staff_id: staff1.id)
+profile1 = Profile.create(bio: "Software Engineer # FullStack Engineer", avatar: "", about:"", location:"", bio_name: "", my_email: "", tech: "", staff_id: staff1.id)
 
 puts "Done seeding!"

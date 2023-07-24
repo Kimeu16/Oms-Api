@@ -13,4 +13,3 @@ class Profile < ApplicationRecord
     errors.add(:avatar, "Invalid file format") unless avatar.file.extension.in?(%w(jpg jpeg png))
   end
 end
-

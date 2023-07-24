@@ -16,7 +16,11 @@ class AdminsController < ApplicationController
   end
 
   def show
-    render json: admin, status: :ok
+    render json: current_admin
+  end
+
+  def mi
+    render json: @current_admin
   end
 
   def update

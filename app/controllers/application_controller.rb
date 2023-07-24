@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
     decoded = jwt_decode(header)
 
     if decoded == "Token not found"
-      render json: { error: 'Not Authenticated' }, status: :unauthorized
+      render json: { error: 'Not STAFF Authenticated' }, status: :unauthorized
     else
       staff_id = decoded[:staff_id] if decoded.key?(:staff_id)
       @current_staff = Staff.find_by(id: staff_id)
@@ -43,7 +43,6 @@ class ApplicationController < ActionController::API
     if decoded == "Token not found"
       render json: { error: 'Not Authenticated' }, status: :unauthorized
     else
-
       admin_id = decoded[:admin_id] if decoded.key?(:admin_id)
       @current_admin = Admin.find_by(id: admin_id)
     end

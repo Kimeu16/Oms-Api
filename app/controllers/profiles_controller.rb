@@ -26,6 +26,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
+    profile = Profile.find_by(id: params[:id])
     if @current_staff.profile.update(profile_params)
       render json: @current_staff.profile, status: :created
     else
@@ -46,7 +47,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.permit(:avatar, :bio, :about, :location)
+    params.permit(:avatar, :bio, :about, :location, :bio_name, :my_email, :tech)
   end
 
   def deny_access
