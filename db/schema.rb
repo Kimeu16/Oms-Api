@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.string "task_name"
     t.string "assigned_to"
     t.string "managed_by"
+    t.string "project_name"
     t.integer "project_id"
     t.integer "staff_id"
     t.datetime "created_at", null: false

@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :managers
   resources :projects
   resources :tasks
-  # resources :staffs
   resources :clients
   resources :forms
   resources :leave_types

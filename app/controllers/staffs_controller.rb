@@ -42,9 +42,13 @@ class StaffsController < ApplicationController
   end
 
   def destroy
-    @staff = set_staff
-    @staff.destroy
-    head :no_content
+    staff = Staff.find_by(id: params[:id])
+    if staff
+      staff.destroy
+      head :no_content
+    else
+      render json: { error: "Staff not found" }, status: :not_found
+    end
   end
 
   private
@@ -54,7 +58,7 @@ class StaffsController < ApplicationController
   end
 
   def staff_params
-    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack)
+    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
   end
 
   def deny_access

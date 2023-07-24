@@ -29,7 +29,7 @@ class LeaveCalculationsController < ApplicationController
 
   # POST /leave_calculations
   def create
-    leave_calculation = current_staff.leave_calculations.build(leave_calculation_params)
+    leave_calculation = LeaveCalculation.create(leave_calculation_params)
     update_leave_days(leave_calculation) # Calculate and update leave days
     if leave_calculation.save
       render json: leave_calculation, status: :created
@@ -40,7 +40,7 @@ class LeaveCalculationsController < ApplicationController
 
   # PATCH/PUT /leave_calculations/1
   def update
-    leave_calculation = LeaveCalculation.find_by(id: params[:id], staff_id: current_staff.id)
+    leave_calculation = LeaveCalculation.find_by(id: params[:id])
     if leave_calculation
       if leave_calculation.update(leave_calculation_params)
         update_leave_days(leave_calculation) # Recalculate and update leave days
@@ -55,7 +55,7 @@ class LeaveCalculationsController < ApplicationController
 
   # DELETE /leave_calculations/1
   def destroy
-    leave_calculation = LeaveCalculation.find_by(id: params[:id], staff_id: current_staff.id)
+    leave_calculation = LeaveCalculation.find_by(id: params[:id])
     if leave_calculation
       leave_calculation.destroy
       head :no_content

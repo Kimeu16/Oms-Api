@@ -76,8 +76,9 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:task_name, :assigned_to, :managed_by, :project_id, :staff_id)
+    params.permit(:task_name, :assigned_to, :managed_by, :project_id, :staff_name, :project_name)
   end
+
 
   def deny_staff
     render_unauthorized unless current_admin
