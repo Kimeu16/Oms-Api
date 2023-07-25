@@ -8,11 +8,13 @@ class TasksController < ApplicationController
     if current_admin
       tasks = Task.all
     else
-      tasks = @current_staff.tasks
+      # Filter tasks based on the staff_name (assigned_to field)
+      tasks = Task.where(assigned_to: @current_staff.staff_name)
     end
 
     render json: tasks, status: :ok
   end
+
 
   # GET /tasks/1
   def show
@@ -31,7 +33,7 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     task = Task.create(task_params)
-    task.staff_id = @current_staff.id if @current_staff
+    task.staff_name = @current_staff.staff_name if @current_staff
 
     if task.save
       render json: task, status: :created
@@ -76,9 +78,8 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:task_name, :assigned_to, :managed_by, :project_id, :staff_name, :project_name)
+    params.permit(:task_name, :assigned_to, :managed_by, :project_name, :project_id, :staff_id)
   end
-
 
   def deny_staff
     render_unauthorized unless current_admin

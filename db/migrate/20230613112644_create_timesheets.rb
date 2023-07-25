@@ -5,6 +5,7 @@ class CreateTimesheets < ActiveRecord::Migration[7.0]
       t.time :start_time
       t.time :end_time
       t.text :progress_details
+      t.string :task_detail
       t.integer :task_id, null: false, foreign_key: true
       t.integer :staff_id, null: true, foreign_key: true
 

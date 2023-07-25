@@ -69,7 +69,7 @@ end
   private
 
   def timesheet_params
-    params.permit(:date, :start_time, :end_time, :progress_details, :task_id, :staff_id)
+    params.permit(:date, :start_time, :end_time, :progress_details, :task_detail, :task_id, :staff_id)
   end
 
   def deny_access
