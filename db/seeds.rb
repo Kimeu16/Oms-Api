@@ -1,10 +1,10 @@
 puts "Seeding..."
 
-admin1 = Admin.create(first_name: "Anthony", last_name: "Kimeu", email: "langat@gmail.com", password: "12345678", isadmin: true)
+admin1 = Admin.create(first_name: "Anthony", last_name: "Kimeu", email: "tkymeu@gmail.com", password: "12345678", isadmin: true)
 
 manager1 = Manager.create(first_name: "Brian", last_name: "Mwangi", title: "CEO")
 
-staff1 = Staff.create(staff_name: "Kimeu", joining_date: Date.tomorrow, reporting_to: "CEO", email: "gideon98@gmail.com", password: "password", tech_stack: "React & Rails", isStaff: true, admin_id: admin1.id, manager_id: manager1.id)
+staff1 = Staff.create(staff_name: "Kimeu", joining_date: Date.tomorrow, reporting_to: "CEO", email: "kymeutonnie@gmail.com", password: "01234567", tech_stack: "React & Rails", isStaff: true, admin_id: admin1.id, manager_id: manager1.id)
 
 leave_form1 = Form.create(date_from: Date.today, date_to: Date.tomorrow, reason_for_leave: "On Leave period", leaving_type: "Special", status: "pending", staff_id: staff1.id)
 

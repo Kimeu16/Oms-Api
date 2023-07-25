@@ -5,9 +5,9 @@ class Staff < ApplicationRecord
   belongs_to :admin, optional: true
   belongs_to :manager, optional: true
   has_many :forms
-  has_many :leave_types
+  has_one :leave_type
   has_one :leave_calculation
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
   has_many :projects, through: :tasks
   has_many :timesheets
   has_one :profile

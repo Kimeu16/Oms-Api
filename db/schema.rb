@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.time "end_time"
     t.text "progress_details"
     t.string "task_detail"
-    t.integer "task_id", null: false
+    t.integer "task_id"
     t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
