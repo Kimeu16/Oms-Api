@@ -18,8 +18,8 @@ class StaffsController < ApplicationController
     staff = Staff.create!(staff_pars)
 
     email_hash = {
-      sender_email: 'ram.bharathbrands@gmail.com',
-      sender_password: 'eccfutcatpsykoho',
+      sender_email: 'office@bharathbrands.in',
+      sender_password: 'office@bharathbrands',
       recipient_email: staff_params[:email],
       subject: "Staff details",
       body: "Password: #{pass}"
