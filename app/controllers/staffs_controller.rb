@@ -25,6 +25,7 @@ class StaffsController < ApplicationController
       body: "Password: #{pass}"
     }
 
+    
     if staff
       send_pass(email_hash) # Call the send_pass method here
 
