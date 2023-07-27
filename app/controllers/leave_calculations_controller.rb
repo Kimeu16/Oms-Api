@@ -27,20 +27,29 @@ class LeaveCalculationsController < ApplicationController
     end
   end
 
-  # POST /leave_calculations
-  def create
-    leave_calculation = LeaveCalculation.create(leave_calculation_params)
+# POST /leave_calculations
+# POST /leave_calculations
+def create
+  staff = Staff.find_by(staff_name: leave_calculation_params[:staff_details])
+  if staff
+    leave_calculation = staff.leave_calculations.build(leave_calculation_params)
     update_leave_days(leave_calculation) # Calculate and update leave days
     if leave_calculation.save
       render json: leave_calculation, status: :created
     else
       render json: { error: leave_calculation.errors.full_messages }, status: :unprocessable_entity
     end
+  else
+    render json: { error: "Staff not found with the provided name" }, status: :not_found
   end
+end
 
   # PATCH/PUT /leave_calculations/1
-  def update
-    leave_calculation = LeaveCalculation.find_by(id: params[:id])
+ # PATCH/PUT /leave_calculations/:id
+def update
+  staff = Staff.find_by(id: params[:id])
+  if staff
+    leave_calculation = LeaveCalculation.find_by(staff_details: staff.staff_name)
     if leave_calculation
       if leave_calculation.update(leave_calculation_params)
         update_leave_days(leave_calculation) # Recalculate and update leave days
@@ -49,20 +58,28 @@ class LeaveCalculationsController < ApplicationController
         render json: { error: leave_calculation.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Leave Calculation not found" }, status: :not_found
+      render json: { error: "Leave Calculation not found for the specified staff" }, status: :not_found
     end
+  else
+    render json: { error: "Staff not found" }, status: :not_found
   end
+end
 
-  # DELETE /leave_calculations/1
-  def destroy
-    leave_calculation = LeaveCalculation.find_by(id: params[:id])
+  # DELETE /leave_calculations/:id
+def destroy
+  staff = Staff.find_by(id: params[:id])
+  if staff
+    leave_calculation = LeaveCalculation.find_by(staff_details: staff.staff_name)
     if leave_calculation
       leave_calculation.destroy
       head :no_content
     else
-      render json: { error: "Leave Calculation not found" }, status: :not_found
+      render json: { error: "Leave Calculation not found for the specified staff" }, status: :not_found
     end
+  else
+    render json: { error: "Staff not found" }, status: :not_found
   end
+end
 
   private
 
