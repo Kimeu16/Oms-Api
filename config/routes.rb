@@ -1,9 +1,21 @@
 Rails.application.routes.draw do
+  resources :tasks do
+    member do
+      # Other member routes...
+      # Move the completed_files route outside of the member block
+      post 'upload_completed_files', to: 'tasks#upload_completed_files', as: 'upload_completed_files'
+    end
+    collection do
+      # Move the completed_tasks route inside the collection block
+      get 'completed_tasks', to: 'tasks#completed_tasks'
+    end
+  end
+  
   resources :profiles
   resources :leave_calculations
   resources :managers
   resources :projects
-  resources :tasks
+
   resources :clients
   resources :forms
   resources :leave_types
