@@ -4,8 +4,9 @@ class CreateForms < ActiveRecord::Migration[7.0]
       t.string :your_name
       t.date :date_from
       t.date :date_to
-      t.text :reason_for_leave
+      t.integer :days_applied
       t.string :leaving_type
+      t.text :reason_for_leave
       t.string :status, default: 'pending'
       t.integer :staff_id, null: true, foreign_key: true
 

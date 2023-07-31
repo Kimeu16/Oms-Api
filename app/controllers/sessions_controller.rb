@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
     if staff&.authenticate(params[:password])
       token = jwt_encode(staff_id: staff.id)
-      render json: { token: token, isStaff: true }, status: :ok
+      render json: { token: token, isStaff: true, staff_name: staff.staff_name }, status: :ok
     elsif admin&.authenticate(params[:password])
       token = jwt_encode(admin_id: admin.id)
       render json: { token: token, isadmin: true }, status: :ok

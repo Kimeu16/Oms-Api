@@ -1,5 +1,5 @@
 class FormSerializer < ActiveModel::Serializer
-  attributes :id, :your_name, :date_from, :date_to, :reason_for_leave, :leaving_type, :status, :staff_id, :updated_at, :created_at
+  attributes :id, :your_name, :date_from, :date_to, :leaving_type, :days_applied, :reason_for_leave, :status, :staff_id
 
   belongs_to :staff
 end

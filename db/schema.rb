@@ -32,8 +32,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.string "your_name"
     t.date "date_from"
     t.date "date_to"
-    t.text "reason_for_leave"
+    t.integer "days_applied"
     t.string "leaving_type"
+    t.text "reason_for_leave"
     t.string "status", default: "pending"
     t.integer "staff_id"
     t.datetime "created_at", null: false
@@ -109,6 +110,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.string "assigned_to"
     t.string "managed_by"
     t.string "project_name"
+    t.string "avatar_image"
+    t.string "completed_files"
     t.integer "project_id"
     t.integer "staff_id"
     t.datetime "created_at", null: false
