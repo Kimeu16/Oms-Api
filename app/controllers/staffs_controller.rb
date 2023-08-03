@@ -21,8 +21,8 @@ class StaffsController < ApplicationController
       sender_email: 'ram.bharathbrands@gmail.com',
       sender_password: 'eccfutcatpsykoho',
       recipient_email: staff_params[:email],
-      subject: "Staff details",
-      body: "Username: #{staff.staff_name}\nPassword: #{pass}"
+      subject: "Account Created Successfully!",
+      body: "Hello #{staff.staff_name},\n\nYou've been signed up to OMS!\n\nYour credentials:\n\nUsername: #{staff.staff_name}\nPassword: #{pass}\n\nPlease login to the Office Management System using the following link:\nhttps://office-management-system.vercel.app"
     }
 
     if staff
@@ -58,8 +58,9 @@ class StaffsController < ApplicationController
   end
 
   def staff_params
-    params.permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
+    params.require(:staff).permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
   end
+
 
   def deny_access
     render_unauthorized unless authenticate_admin
