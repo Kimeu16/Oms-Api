@@ -6,6 +6,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def extension_allowlist
-    %w(jpg jpeg png)
+    %w(jpg jpeg png pdf docx txt mp4 avi mov)
   end
 end

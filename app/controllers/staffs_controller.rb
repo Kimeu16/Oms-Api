@@ -22,7 +22,7 @@ class StaffsController < ApplicationController
       sender_password: 'eccfutcatpsykoho',
       recipient_email: staff_params[:email],
       subject: "Staff details",
-      body: "Password: #{pass}"
+      body: "Username: #{staff.staff_name}\nPassword: #{pass}"
     }
 
     if staff

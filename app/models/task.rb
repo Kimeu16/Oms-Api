@@ -19,6 +19,7 @@ class Task < ApplicationRecord
     return unless avatar_image.present?
     errors.add(:avatar_image, "Invalid file format") unless avatar_image.file.extension.in?(%w(jpg jpeg png pdf docx txt mp4 avi mov))
   end
+
   def validate_completed_files_format
     return unless completed_files.present?
 

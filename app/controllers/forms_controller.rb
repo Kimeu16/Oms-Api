@@ -7,9 +7,7 @@ class FormsController < ApplicationController
     if current_admin
       forms = Form.all
     else
-      # Get the staff's name from the currently logged-in staff and set it as the default value for :your_name.
-      your_name = @current_staff.staff_name
-      forms = @current_staff.forms.map { |form| form.attributes.merge(your_name: your_name) }
+      forms = @current_staff.forms
     end
 
     render json: forms, status: :ok
@@ -32,9 +30,7 @@ class FormsController < ApplicationController
     # POST /forms
     def create
       form = @current_staff.forms.build(form_params)
-      form.your_name = @current_staff.staff_name # Set the your_name attribute to the staff's name
       form.staff_id = @current_staff.id
-
       if form.save
         render json: form, status: :created
       else
@@ -71,7 +67,7 @@ class FormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.permit(:your_name, :date_from, :date_to, :days_applied, :leaving_type, :reason_for_leave, :status, :staff_id)
+    params.permit(:your_name, :date_from, :date_to, :reason_for_leave, :leaving_type, :status, :staff_id)
   end
 
   def deny_access

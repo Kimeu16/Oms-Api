@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_staff, only: [:index, :show, :create, :upload_completed_files]
-  before_action :deny_staff, only: [:show, :update, :destroy]
+  before_action :deny_staff, only: [:show, :create, :update, :destroy]
   before_action :deny_access, only: [:show, :create, :update, :destroy]
 
   # GET /tasks
@@ -75,7 +75,7 @@ class TasksController < ApplicationController
   end
 
   def upload_completed_files
-    task = Task.find_by(id: params[:id])
+    task = Task.find_by(id: params[:task_id])
 
     if task
       if current_staff && task.assigned_to == current_staff.staff_name
@@ -109,35 +109,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # def upload_completed_files
-  #   task = Task.find_by(id: params[:id])
-
-  #   if task
-  #     if current_staff && task.assigned_to == current_staff.staff_name
-  #       if params[:completed_files].present?
-  #         puts "Task ID: #{task.id.inspect}"
-  #         puts "Current Staff ID: #{current_staff.id.inspect}"
-  #         puts "Completed Files Params: #{params[:completed_files].inspect}"
-
-  #         # Update the task's completed_files attribute with the new value
-  #         task.update(completed_files: params[:completed_files])
-  #         render json: task, status: :ok
-  #       else
-  #         render json: { error: "No completed files attached" }, status: :unprocessable_entity
-  #       end
-  #     else
-  #       puts "Current Staff: #{current_staff.inspect}"
-  #       puts "Task Assigned To: #{task.assigned_to.inspect}" # Add this line to check the assigned_to attribute
-
-  #       render_unauthorized
-  #     end
-  #   else
-  #     render json: { error: "Task not found" }, status: :not_found
-  #   end
-  # end
-
   def completed_tasks
-    if current_admin
+    if current_staff || current_admin
       tasks_with_completed_files = Task.where.not(completed_files: nil)
 
       # Prepare a new array to hold the tasks with completed file URLs
@@ -161,10 +134,43 @@ class TasksController < ApplicationController
     end
   end
 
+  def download_avatar
+    task = Task.find(params[:id])
+    file_path = task.avatar_image.path
+    send_file file_path, disposition: 'attachment'
+  end
+
+  def download_completed_file
+    task = Task.find_by(id: params[:id])
+
+    if task
+      if current_staff && task.assigned_to == current_staff.staff_name
+        if task.completed_files.present?
+          file = task.completed_files.first # Assuming you want to download the first file in the array
+
+          # Use CarrierWave's provided `path` method to get the local file path
+          if file.present? && File.exists?(file.path)
+            # Use CarrierWave's provided `send_file` method to send the file as a response with appropriate headers
+            send_file file.path, disposition: 'attachment', filename: file.filename
+          else
+            head :not_found # Send an empty response with status code 404 (Not Found)
+          end
+        else
+          render json: { error: 'No completed files attached' }, status: :unprocessable_entity
+        end
+      else
+        render_unauthorized
+      end
+    else
+      render json: { error: 'Task not found' }, status: :not_found
+    end
+  end
+
+
   private
 
   def task_params
-    params.permit(:avatar_image, :completed_files, :task_name, :assigned_to, :managed_by, :project_name, :project_id, :staff_id)
+    params.permit(:id, :avatar_image, :completed_files, :task_name, :assigned_to, :managed_by, :project_name, :task_deadline, :project_id, :staff_id)
   end
 
   def deny_staff

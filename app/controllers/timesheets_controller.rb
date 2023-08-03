@@ -14,6 +14,18 @@ def index
   render json: timesheets, status: :ok
 end
 
+# def index
+#   if params[:type] == 'start'
+#     timesheets = @current_staff.start_timesheets
+#   elsif params[:type] == 'end'
+#     timesheets = @current_staff.end_timesheets
+#   else
+#     timesheets = @current_staff.timesheets
+#   end
+
+#   render json: timesheets, status: :ok
+# end
+
 
   # GET /timesheets/1
 def show
@@ -31,7 +43,7 @@ end
 
   # POST /timesheets
   def create
-    timesheet = @current_staff.timesheets.build(timesheet_params)
+    timesheet = @current_staff.timesheets.create(timesheet_params)
     timesheet.staff_id = @current_staff.id
     if timesheet.save
       render json: timesheet, status: :created
@@ -40,6 +52,29 @@ end
     end
   end
 
+  # def create
+  #   # Ensure that staff_id is set correctly in timesheet_params
+  #   timesheet_params[:staff_id] = @current_staff.id
+
+  #   # Separate the mode from the rest of the parameters
+  #   mode = timesheet_params.delete(:mode)
+
+  #   # Create the timesheet with the appropriate mode
+  #   timesheet = if mode == 'start'
+  #                 StartTimesheet.create(timesheet_params)
+  #               elsif mode == 'end'
+  #                 EndTimesheet.create(timesheet_params)
+  #               else
+  #                 # Handle invalid mode here (if needed)
+  #                 nil
+  #               end
+
+  #   if timesheet && timesheet.valid?
+  #     render json: timesheet, status: :created
+  #   else
+  #     render json: { error: timesheet&.errors&.full_messages || ['Timesheet creation failed'] }, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /timesheets/1
   def update
@@ -69,7 +104,7 @@ end
   private
 
   def timesheet_params
-    params.permit(:date, :start_time, :end_time, :progress_details, :task_detail, :task_id, :staff_id)
+    params.require(:timesheet).permit(:date, :start_time, :end_time, :task_detail, :time_limit, :progress_details, :task_id, :staff_id, :mode)
   end
 
   def deny_access

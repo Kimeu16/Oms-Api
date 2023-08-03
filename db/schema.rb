@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -24,6 +24,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
   create_table "clients", charset: "utf8mb3", force: :cascade do |t|
     t.string "client_name"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "end_timesheets", charset: "utf8mb3", force: :cascade do |t|
+    t.date "date"
+    t.time "end_time"
+    t.string "task_detail"
+    t.string "progress_details"
+    t.string "staff_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -105,11 +115,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "start_timesheets", charset: "utf8mb3", force: :cascade do |t|
+    t.date "date"
+    t.time "start_time"
+    t.string "task_detail"
+    t.string "time_limit"
+    t.string "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
     t.string "task_name"
     t.string "assigned_to"
     t.string "managed_by"
     t.string "project_name"
+    t.string "task_deadline"
     t.string "avatar_image"
     t.string "completed_files"
     t.integer "project_id"
@@ -122,8 +143,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_113944) do
     t.date "date"
     t.time "start_time"
     t.time "end_time"
-    t.text "progress_details"
     t.string "task_detail"
+    t.string "progress_details"
+    t.string "time_limit"
     t.integer "task_id"
     t.integer "staff_id"
     t.datetime "created_at", null: false
