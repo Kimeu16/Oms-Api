@@ -14,6 +14,26 @@ class StartTimesheetsController < ApplicationController
       end
   end
 
+  # def download_completed_file
+  #   task = Task.find_by(id: params[:id])
+
+  #   if task
+  #     if task.completed_files.present?
+  #       file = task.completed_files.first
+
+  #       if file.present?
+  #         send_file file.download, disposition: 'attachment', filename: file.filename.to_s, type: file.content_type
+  #       else
+  #         head :not_found
+  #       end
+  #     else
+  #       render json: { error: 'No completed files attached' }, status: :unprocessable_entity
+  #     end
+  #   else
+  #     render json: { error: 'Task not found' }, status: :not_found
+  #   end
+  # end
+
   # GET /start_timesheets/:id
   def show
     start_timesheet = StartTimesheet.find(params[:id])
