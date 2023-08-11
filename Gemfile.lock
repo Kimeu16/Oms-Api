@@ -195,6 +195,7 @@ DEPENDENCIES
   carrierwave
   debug
   jwt
+  mail
   mysql2
   puma (~> 5.0)
   rack-cors

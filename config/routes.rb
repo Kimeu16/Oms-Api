@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   resources :leave_calculations
   resources :managers
   resources :projects
+  resources :leave_types
   resources :end_timesheets
+  resources :timesheets, except: [:new, :edit], defaults: { format: 'json' }
   resources :clients
   resources :forms
   resources :leave_types
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
       get 'tasks', to: 'staffs#tasks'
       get 'leave_calculations', to: 'staffs#leave_calculations'
       get 'timesheets', to: 'staffs#timesheets'
+      get 'end_timesheets', to: 'staffs#end_timesheets'
       get 'profile', to: 'staffs#profile'
     end
   end
