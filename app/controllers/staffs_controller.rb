@@ -17,12 +17,14 @@ class StaffsController < ApplicationController
 
     staff = Staff.create!(staff_pars)
 
+    email_body = "Hello #{staff.staff_name},\n\nYou've been signed up to OMS!\n\nYour credentials:\n\nUsername: #{staff_params[:email]}\nPassword: #{pass}\n\nPlease login to the Office Management System using the following link:\nhttps://office-management-system.vercel.app"
+
     email_hash = {
       sender_email: 'omstestemail8@gmail.com',
       sender_password: 'nwhoqqdfalraychl',
       recipient_email: staff_params[:email],
       subject: "Account Created Successfully!",
-      body: "Hello #{staff.staff_name},\n\nYou've been signed up to OMS!\n\nYour credentials:\n\nUsername: #{staff.staff_name}\nPassword: #{pass}\n\nPlease login to the Office Management System using the following link:\nhttps://office-management-system.vercel.app"
+      body: email_body
     }
 
     if staff
@@ -60,7 +62,6 @@ class StaffsController < ApplicationController
   def staff_params
     params.require(:staff).permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
   end
-
 
   def deny_access
     render_unauthorized unless authenticate_admin
