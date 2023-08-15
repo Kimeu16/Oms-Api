@@ -6,6 +6,7 @@ class CreateProjects < ActiveRecord::Migration[7.0]
       t.string :client_details
       t.integer :client_id, null: true, foreign_key: true
 
+      
       t.timestamps
     end
   end
