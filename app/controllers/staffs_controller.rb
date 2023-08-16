@@ -81,6 +81,7 @@ class StaffsController < ApplicationController
       #{email_hash[:body]}
     MESSAGE
 
+    
     Net::SMTP.start('smtp.gmail.com', 587, 'localhost', email_hash[:sender_email], email_hash[:sender_password], :login) do |smtp|
       smtp.send_message(message, email_hash[:sender_email], email_hash[:recipient_email])
     end
