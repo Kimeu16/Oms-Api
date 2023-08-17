@@ -6,7 +6,7 @@ class CreateStaffs < ActiveRecord::Migration[7.0]
       t.string :reporting_to
       t.string :email
       t.string :password_digest
-      t.text :tech_stack
+      t.text :designation
       t.boolean :isStaff, default: true
       t.integer :admin_id, null: true, foreign_key: true
       t.integer :manager_id, null: true, foreign_key: true

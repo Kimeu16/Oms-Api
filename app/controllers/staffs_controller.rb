@@ -60,7 +60,7 @@ class StaffsController < ApplicationController
   end
 
   def staff_params
-    params.require(:staff).permit(:staff_name, :joining_date, :reporting_to, :email, :tech_stack, :isStaff, :admin_id, :manager_id)
+    params.require(:staff).permit(:staff_name, :joining_date, :reporting_to, :email, :designation, :isStaff, :admin_id, :manager_id)
   end
 
   def deny_access
@@ -81,9 +81,13 @@ class StaffsController < ApplicationController
       #{email_hash[:body]}
     MESSAGE
 
-    
+
     Net::SMTP.start('smtp.gmail.com', 587, 'localhost', email_hash[:sender_email], email_hash[:sender_password], :login) do |smtp|
       smtp.send_message(message, email_hash[:sender_email], email_hash[:recipient_email])
     end
   end
 end
+
+
+
+

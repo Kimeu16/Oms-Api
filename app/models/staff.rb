@@ -16,7 +16,7 @@ class Staff < ApplicationRecord
   validates :staff_name, presence: true
   validates :joining_date, presence: true
   validates :reporting_to, presence: true
-  validates :tech_stack, presence: true
+  validates :designation, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }
 

@@ -107,7 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
     t.string "reporting_to"
     t.string "email"
     t.string "password_digest"
-    t.text "tech_stack"
+    t.text "designation"
     t.boolean "isStaff", default: true
     t.integer "admin_id"
     t.integer "manager_id"

@@ -11,10 +11,9 @@ Rails.application.routes.draw do
     # Custom member route for downloading the avatar_image
     get 'download_avatar', on: :member, to: 'tasks#download_avatar', as: 'download_avatar'
 
-    get 'download_completed_file', on: :member, to: 'tasks#download_completed_file', as: 'download_completed_file_for_staff'
+    # get 'download_completed_file', on: :member, to: 'tasks#download_completed_file', as: 'download_completed_file'
 
-  # Custom member route for downloading the completed file for admin
-    get 'download_completed_file_for_admin', on: :member, to: 'tasks#download_completed_file_for_admin', as: 'download_completed_file_for_admin'
+    get 'download_completed_file/:file_index', action: :download_completed_file, as: 'download_completed_file'
 
   end
 
