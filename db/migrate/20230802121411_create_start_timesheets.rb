@@ -7,8 +7,6 @@ class CreateStartTimesheets < ActiveRecord::Migration[6.0]
       t.string :time_limit
       t.string :staff_id, null: false, foreign_key: true
 
-      # Add any other specific attributes for StartTimesheet
-
       t.timestamps
     end
   end

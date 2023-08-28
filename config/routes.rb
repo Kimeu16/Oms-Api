@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+
+  mount ActionCable.server => '/cable'
+
+  scope '/messages' do
+    post '/send_to_admin/:admin_id', to: 'messages#send_to_admin', as: 'send_to_admin_message'
+    post '/send_to_staff/:staff_id', to: 'messages#send_to_staff', as: 'send_to_staff_message'
+    # get '/received_messages', to: 'messages#received_messages'
+    get '/received_messages', to: 'messages#received_messages', as: 'received_messages'
+    # get '/sent_messages', to: 'messages#sent_messages'
+    get '/sent_messages', to: 'messages#sent_messages', as: 'sent_messages'
+
+    # Define routes for update and destroy actions
+    put '/:id', to: 'messages#update', as: 'update_message'
+    delete '/:id', to: 'messages#destroy', as: 'destroy_message'
+  end
+
   resources :tasks do
     # Other member routes...
     collection do
@@ -28,8 +44,8 @@ Rails.application.routes.draw do
   resources :clients
   resources :forms
   resources :leave_types
-  resources :timesheets
   resources :admins
+  resources :company_articles
 
   resources :staffs do
     member do
@@ -39,6 +55,8 @@ Rails.application.routes.draw do
       get 'timesheets', to: 'staffs#timesheets'
       get 'end_timesheets', to: 'staffs#end_timesheets'
       get 'profile', to: 'staffs#profile'
+      post 'check_in', to: 'check_ins#check_in'
+      post 'check_out', to: 'check_ins#check_out'
     end
   end
 

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       render json: { token: token, isStaff: true, staff_name: staff.staff_name }, status: :ok
     elsif admin&.authenticate(params[:password])
       token = jwt_encode(admin_id: admin.id)
-      render json: { token: token, isadmin: true }, status: :ok
+      render json: { token: token, isadmin: true, first_name: admin.first_name }, status: :ok
     else
       render json: { errors: 'Invalid Password or Username' }, status: :unauthorized
     end

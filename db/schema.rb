@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_065451) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -21,9 +21,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "check_ins", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "staff_id", null: false
+    t.datetime "check_in_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "check_out_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["staff_id"], name: "index_check_ins_on_staff_id"
+  end
+
   create_table "clients", charset: "utf8mb3", force: :cascade do |t|
     t.string "client_name"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_articles", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title"
+    t.date "date"
+    t.text "content"
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -75,6 +93,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
     t.string "first_name"
     t.string "last_name"
     t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", charset: "utf8mb3", force: :cascade do |t|
+    t.text "content"
+    t.string "channel"
+    t.integer "admin_id"
+    t.integer "staff_id"
+    t.boolean "read", default: false
+    t.string "sender_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -152,4 +181,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_121515) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "check_ins", "staffs"
 end

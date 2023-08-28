@@ -9,6 +9,7 @@ class StaffSerializer < ActiveModel::Serializer
   has_many :tasks
   has_many :projects, through: :tasks
   has_many :timesheets, through: :tasks
+  has_many :company_articles
   has_one :profile
 
 end

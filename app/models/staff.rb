@@ -10,7 +10,14 @@ class Staff < ApplicationRecord
   has_many :tasks
   has_many :projects, through: :tasks
   has_many :timesheets
+  has_many :company_articles
   has_one :profile
+  has_many :check_ins
+
+  
+  # Add associations for sent and received messages
+  has_many :sent_messages, class_name: 'Message', foreign_key: 'staff_id'
+  has_many :received_messages, class_name: 'Message', foreign_key: 'admin_id'
 
 
   validates :staff_name, presence: true

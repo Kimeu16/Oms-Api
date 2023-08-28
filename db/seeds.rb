@@ -14,6 +14,8 @@ leave_calculation1 = LeaveCalculation.create(staff_details: "Anthony Kimeu", typ
 
 client1 = Client.create(client_name: "Maxxy", description: "Fully functional")
 
+article1 = CompanyArticle.create(title: "ISO CERTIFIED", date: Date.today, content: "We are now ISO certified", staff_id: staff1.id)
+
 project1 = Project.create(project_name: "Anthony", description: "Full Stack Project", client_details: "bla bla bla")
 
 task1 = Task.create(task_name: "Office System", assigned_to: "Anthony", managed_by: "Project Manager", project_name: "Oms", task_deadline:"Three Weeks", avatar_image: "", completed_files: "", project_id: project1.id, staff_id: staff1.id)
@@ -22,4 +24,5 @@ timesheet1 = Timesheet.create(date: Date.today, start_time: Time.now, end_time: 
 
 profile1 = Profile.create(bio: "Software Engineer # FullStack Engineer", avatar: "", about:"", location:"", bio_name: "", my_email: "", tech: "", staff_id: staff1.id)
 
+check_in1 = staff1.check_ins.create(check_in_at: 2.hours.ago, check_out_at: 1.hour.ago)
 puts "Done seeding!"
