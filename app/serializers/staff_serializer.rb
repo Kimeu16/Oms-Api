@@ -11,5 +11,6 @@ class StaffSerializer < ActiveModel::Serializer
   has_many :timesheets, through: :tasks
   has_many :company_articles
   has_one :profile
-
+  has_many :request
+  has_many :progresses
 end

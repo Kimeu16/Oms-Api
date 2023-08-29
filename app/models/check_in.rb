@@ -1,5 +1,5 @@
 class CheckIn < ApplicationRecord
-  belongs_to :staff
+  belongs_to :staff,optional:true
 
   validates :check_in_at, presence: true
 

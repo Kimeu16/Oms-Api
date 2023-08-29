@@ -1,9 +1,11 @@
 class CreateTasks < ActiveRecord::Migration[7.0]
   def change
     create_table :tasks do |t|
+      t.date :assignment_date
       t.string :task_name
       t.string :assigned_to
-      t.string :managed_by
+      t.string :task_manager
+      t.string :project_manager
       t.string :project_name
       t.string :task_deadline
       t.string :avatar_image

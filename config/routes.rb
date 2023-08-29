@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   resources :leave_types
   resources :admins
   resources :company_articles
+  resources :requests
+  resources :progresses
 
   resources :staffs do
     member do

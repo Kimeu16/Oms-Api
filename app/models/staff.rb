@@ -4,6 +4,8 @@ class Staff < ApplicationRecord
 
   belongs_to :admin, optional: true
   belongs_to :manager, optional: true
+  has_many :requests
+  has_many :progresses
   has_many :forms
   has_many :leave_types
   has_many :leave_calculations, dependent: :destroy
@@ -12,13 +14,10 @@ class Staff < ApplicationRecord
   has_many :timesheets
   has_many :company_articles
   has_one :profile
-  has_many :check_ins
 
-  
   # Add associations for sent and received messages
   has_many :sent_messages, class_name: 'Message', foreign_key: 'staff_id'
   has_many :received_messages, class_name: 'Message', foreign_key: 'admin_id'
-
 
   validates :staff_name, presence: true
   validates :joining_date, presence: true
@@ -26,5 +25,4 @@ class Staff < ApplicationRecord
   validates :designation, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }
-
 end

@@ -18,18 +18,25 @@ class ApplicationController < ActionController::API
     render json: { error: "#{exception.model} not found" }, status: :not_found
   end
 
-  def authenticate_staff
-    header = request.headers['Authorization']
-    header = header.split(' ').last if header
-    decoded = jwt_decode(header)
-
-    if decoded == "Token not found"
-      render json: { error: 'Not STAFF Authenticated' }, status: :unauthorized
-    else
-      staff_id = decoded[:staff_id] if decoded.key?(:staff_id)
-      @current_staff = Staff.find_by(id: staff_id)
-    end
+ def authenticate_staff
+  header = request.headers['Authorization']
+  if header.nil? || !header.start_with?('Bearer ')
+    render json: { error: 'Not STAFF Authenticated' }, status: :unauthorized
+    return nil
   end
+
+  token = header.split(' ').last
+  decoded = jwt_decode(token)
+
+  if decoded.key?(:staff_id)
+    staff_id = decoded[:staff_id]
+    @current_staff = Staff.find_by(id: staff_id)
+  else
+    render json: { error: 'Not STAFF Authenticated' }, status: :unauthorized
+    nil
+  end
+end
+
 
   def current_staff
     @current_staff ||= authenticate_staff

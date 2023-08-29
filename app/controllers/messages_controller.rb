@@ -1,22 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :update, :destroy]
 
-  # def sent_messages
-  #   if current_staff
-  #     # If the current user is a staff member, retrieve messages sent by staff.
-  #     @sent_messages = Message.where(sender_type: 'staff', staff_id: current_staff.id)
-  #   elsif current_admin
-  #     # If the current user is an admin, retrieve messages sent by admins.
-  #     @sent_messages = Message.where(sender_type: 'admin', admin_id: current_admin.id)
-  #   else
-  #     # Handle the case when the user is not authenticated.
-  #     render json: { error: 'Authentication required' }, status: :unauthorized
-  #     return
-  #   end
-
-  #   render json: @sent_messages
-  # end
-
   def sent_messages
     if current_staff
       # If the current user is a staff member, retrieve messages sent by staff.
@@ -38,19 +22,6 @@ class MessagesController < ApplicationController
 
     render json: @sent_messages
   end
-
-  # GET /messages/received_messages
-  # def received_messages
-  #   if current_staff
-  #     # If the current user is a staff member, retrieve messages received by them.
-  #     @received_messages = Message.where(staff_id: current_staff.id, sender_type: 'admin')
-  #   elsif current_admin
-  #     # If the current user is an admin, retrieve messages received by them.
-  #     @received_messages = Message.where(admin_id: current_admin.id, sender_type: 'staff')
-  #   end
-
-  #   render json: @received_messages
-  # end
 
   def received_messages
     if current_staff
@@ -94,53 +65,6 @@ class MessagesController < ApplicationController
       render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
-  # POST /messages/send_to_admin/:admin_id
-  # def send_to_admin
-  #   # Remove the condition that restricts sending messages to only staff
-  #   admin_member = Admin.find(params[:admin_id])
-
-  #   message = Message.new(
-  #     content: params[:content],
-  #     channel: params[:channel],
-  #     sender_type: 'staff',
-  #     staff_id: params[:staff_id], # Use the staff_id from the route parameters
-  #     admin_id: admin_member.id,
-  #     read: false
-  #   )
-
-  #   if message.save
-  #     ActionCable.server.broadcast("chat_#{message.channel}", { message: message.content })
-  #     render json: message, status: :created
-  #   else
-  #     render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
-
-  # def send_to_staff
-  #   unless current_admin
-  #     render json: { error: 'Only admins can send messages to staff' }, status: :unprocessable_entity
-  #     return
-  #   end
-
-  #   staff_member = Staff.find(params[:staff_id])
-
-  #   message = Message.new(
-  #     content: params[:content],
-  #     channel: params[:channel],
-  #     sender_type: 'admin',   # Set sender_type to 'admin'
-  #     admin_id: current_admin.id,
-  #     staff_id: staff_member.id,
-  #     read: false
-  #   )
-
-  #   if message.save
-  #     ActionCable.server.broadcast("chat_#{message.channel}", { message: message.content })
-  #     render json: message, status: :created
-  #   else
-  #     render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
 
   def send_to_staff
     unless current_admin
