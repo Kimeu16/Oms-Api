@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_065451) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_29_121632) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_065451) do
   end
 
   create_table "check_ins", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "staff_id", null: false
+    t.bigint "staff_id"
     t.datetime "check_in_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "check_out_at", precision: nil
     t.datetime "created_at", null: false
@@ -121,11 +121,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_065451) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "progresses", charset: "utf8mb3", force: :cascade do |t|
+    t.string "task_managed"
+    t.string "project_managed"
+    t.date "assigned_date"
+    t.date "start_date"
+    t.string "exceeded_by"
+    t.date "delivery_time"
+    t.integer "staff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "projects", charset: "utf8mb3", force: :cascade do |t|
     t.string "project_name"
     t.text "description"
     t.string "client_details"
     t.integer "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "requests", charset: "utf8mb3", force: :cascade do |t|
+    t.string "request_detail"
+    t.date "request_date"
+    t.string "request_to"
+    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -155,9 +176,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_065451) do
   end
 
   create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
+    t.date "assignment_date"
     t.string "task_name"
     t.string "assigned_to"
-    t.string "managed_by"
+    t.string "task_manager"
+    t.string "project_manager"
     t.string "project_name"
     t.string "task_deadline"
     t.string "avatar_image"

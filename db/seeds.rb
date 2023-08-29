@@ -18,11 +18,17 @@ article1 = CompanyArticle.create(title: "ISO CERTIFIED", date: Date.today, conte
 
 project1 = Project.create(project_name: "Anthony", description: "Full Stack Project", client_details: "bla bla bla")
 
-task1 = Task.create(task_name: "Office System", assigned_to: "Anthony", managed_by: "Project Manager", project_name: "Oms", task_deadline:"Three Weeks", avatar_image: "", completed_files: "", project_id: project1.id, staff_id: staff1.id)
+task1 = Task.create(assignment_date: Date.today, task_name: "Office System", assigned_to: "Anthony", task_manager: "Omera", project_manager: 'Ida', project_name: "Oms", task_deadline:"Three Weeks", avatar_image: "", completed_files: "", project_id: project1.id, staff_id: staff1.id)
 
 timesheet1 = Timesheet.create(date: Date.today, start_time: Time.now, end_time: Time.now, task_id: task1.id, task_detail: "Oms", progress_details: "Completed task", time_limit: " Three Weeks", staff_id: staff1.id)
 
 profile1 = Profile.create(bio: "Software Engineer # FullStack Engineer", avatar: "", about:"", location:"", bio_name: "", my_email: "", tech: "", staff_id: staff1.id)
 
-check_in1 = staff1.check_ins.create(check_in_at: 2.hours.ago, check_out_at: 1.hour.ago)
+check_in1 = CheckIn.create(staff_id: staff1.id, check_in_at: Time.now,  check_out_at: nil)
+
 puts "Done seeding!"
+
+
+
+
+

@@ -3,7 +3,7 @@ class CheckInsController < ApplicationController
   before_action :set_check_in, only: [:check_out]
 
   def check_in
-    @check_in = staff.check_ins.create(check_in_at: Time.now)
+    @check_in = current_staff.check_ins.create(check_in_at: Time.now)
     render json: @check_in, status: :created
   end
 
@@ -18,7 +18,7 @@ class CheckInsController < ApplicationController
   private
 
   def set_check_in
-    @check_in = staff.check_ins.last
+    @check_in = current_staff.check_ins.last
     return render json: { error: 'No check-in found for the staff.' }, status: :not_found unless @check_in
   end
 end

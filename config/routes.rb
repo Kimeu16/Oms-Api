@@ -49,6 +49,12 @@ Rails.application.routes.draw do
   resources :requests
   resources :progresses
 
+  resources :check_ins, only: [:create] do
+    member do
+      patch 'check_out'
+    end
+  end
+
   resources :staffs do
     member do
       get 'forms', to: 'staffs#forms'
@@ -57,8 +63,8 @@ Rails.application.routes.draw do
       get 'timesheets', to: 'staffs#timesheets'
       get 'end_timesheets', to: 'staffs#end_timesheets'
       get 'profile', to: 'staffs#profile'
-      post 'check_in', to: 'check_ins#check_in'
-      post 'check_out', to: 'check_ins#check_out'
+      # post 'check_in', to: 'check_ins#check_in'
+      # post 'check_out', to: 'check_ins#check_out'
     end
   end
 
