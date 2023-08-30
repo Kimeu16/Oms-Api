@@ -14,7 +14,7 @@ leave_calculation1 = LeaveCalculation.create(staff_details: "Anthony Kimeu", typ
 
 article1 = CompanyArticle.create(title: "ISO CERTIFIED", date: Date.today, content: "We are now ISO certified", staff_id: staff1.id)
 
-client1 = Client.create(client_name: "Maxxy", description: "Fully functional", first_email: "g@gmail.com", second_email: "mister@gmail.com", first_contact: "254701424534", second_contact: "254703383959")
+client1 = Client.create(client_name: "Maxxy", description: "Fully functional", main_email: "g@gmail.com", second_email: "mister@gmail.com", first_contact: "254701424534", second_contact: "254703383959")
 
 project1 = Project.create(project_name: "Anthony", description: "Full Stack Project", client_details: "bla bla bla", project_managers: "gidd", task_managers: "Ignition")
 

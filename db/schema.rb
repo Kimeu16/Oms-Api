@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064633) do
   create_table "clients", charset: "utf8mb3", force: :cascade do |t|
     t.string "client_name"
     t.text "description"
-    t.string "first_email"
+    t.string "main_email"
     t.string "second_email"
     t.string "first_contact"
     t.string "second_contact"
