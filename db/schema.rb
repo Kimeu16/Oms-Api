@@ -30,18 +30,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064633) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "check_ins", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "staff_id"
-    t.datetime "check_in_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "check_out_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["staff_id"], name: "index_check_ins_on_staff_id"
-  end
-
   create_table "clients", charset: "utf8mb3", force: :cascade do |t|
     t.string "client_name"
     t.text "description"
+    t.string "first_email"
+    t.string "second_email"
+    t.string "first_contact"
+    t.string "second_contact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -146,6 +141,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064633) do
     t.string "project_name"
     t.text "description"
     t.string "client_details"
+    t.string "project_managers"
+    t.string "task_managers"
     t.integer "client_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -213,5 +210,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064633) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "check_ins", "staffs"
 end
