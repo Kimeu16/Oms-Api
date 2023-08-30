@@ -13,6 +13,7 @@ class Staff < ApplicationRecord
   has_many :projects, through: :tasks
   has_many :timesheets
   has_many :company_articles
+  has_many :check_in_outs
   has_one :profile
 
   # Add associations for sent and received messages

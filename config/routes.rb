@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :check_in_outs
 
   mount ActionCable.server => '/cable'
 
@@ -63,10 +64,13 @@ Rails.application.routes.draw do
       get 'timesheets', to: 'staffs#timesheets'
       get 'end_timesheets', to: 'staffs#end_timesheets'
       get 'profile', to: 'staffs#profile'
-      # post 'check_in', to: 'check_ins#check_in'
-      # post 'check_out', to: 'check_ins#check_out'
     end
   end
+
+  resources :check_in_outs, only: [:index, :show, :destroy]
+
+  post 'check_in_outs/check_in', to: 'check_in_outs#check_in'
+  post 'check_in_outs/check_out', to: 'check_in_outs#check_out'
 
   post "/staffs", to: "staffs#create"
   post "/admins", to: "admins#create"

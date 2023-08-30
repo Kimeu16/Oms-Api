@@ -52,3 +52,4 @@ class ProgressesController < ApplicationController
         render json: { error: 'Unauthorized' }, status: :unauthorized
       end
 end
+

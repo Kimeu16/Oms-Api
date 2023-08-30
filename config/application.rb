@@ -10,6 +10,11 @@ module Oms
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.active_record.default_timezone = :local
+    config.time_zone = "Nairobi"
+    Time::DATE_FORMATS[:default] = "%Y-%m-%d %H:%M:%S"
+    config.active_record.default_timezone = :utc
+
     # # Custom middleware classes
     # require_relative "../app/middleware/jwt_authentication"  # Modify the path to match your actual file location
 

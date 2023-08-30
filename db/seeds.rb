@@ -24,7 +24,6 @@ timesheet1 = Timesheet.create(date: Date.today, start_time: Time.now, end_time: 
 
 profile1 = Profile.create(bio: "Software Engineer # FullStack Engineer", avatar: "", about:"", location:"", bio_name: "", my_email: "", tech: "", staff_id: staff1.id)
 
-check_in1 = CheckIn.create(staff_id: staff1.id, check_in_at: Time.now,  check_out_at: nil)
 
 puts "Done seeding!"
 

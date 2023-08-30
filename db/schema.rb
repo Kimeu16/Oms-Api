@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_121632) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_30_064633) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
     t.string "password_digest"
     t.boolean "isadmin", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "check_in_outs", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.integer "staff_id"
+    t.datetime "check_in"
+    t.datetime "check_out"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
