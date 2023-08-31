@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  
+
   resources :check_in_outs
+
+
 
   mount ActionCable.server => '/cable'
 
