@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :check_in_outs
-
-
-
+  
   mount ActionCable.server => '/cable'
 
   scope '/messages' do
@@ -53,11 +50,6 @@ Rails.application.routes.draw do
   resources :requests
   resources :progresses
 
-  resources :check_ins, only: [:create] do
-    member do
-      patch 'check_out'
-    end
-  end
 
   resources :staffs do
     member do
