@@ -1,12 +1,10 @@
 class CheckInOutsController < ApplicationController
   before_action :authenticate_staff, only: [:check_in, :check_out, :index, :show, :destroy]
 
-  # app/controllers/check_in_outs_controller.rb
   def index
     check_in_outs = CheckInOut.all
     render json: check_in_outs, each_serializer: CheckInOutSerializer
   end
-
 
   def show
     check_in_out = CheckInOut.find(params[:id])
@@ -15,39 +13,15 @@ class CheckInOutsController < ApplicationController
     render json: { error: 'CheckInOut not found' }, status: :not_found
   end
 
-  # def check_in
-  #   if @current_staff
-  #     check_in_out = CheckInOut.create(check_in: Time.now, staff_id: @current_staff.id)
-  #     render json: check_in_out, status: :created
-  #   else
-  #     render_unauthorized
-  #   end
-  # end
-  # def check_in
-  #   if @current_staff
-  #     check_in_out = CheckInOut.create(
-  #       check_in: Time.now,
-  #       staff_id: @current_staff.id,
-  #       name: @current_staff.staff_name # Set the staff_name attribute directly
-  #     )
-  #     render json: {
-  #       check_in_out: check_in_out,
-  #       name: @current_staff.staff_name
-  #     }, status: :created
-  #   else
-  #     render_unauthorized
-  #   end
-  # end
-
   def check_in
     if @current_staff
-      current_time = Time.now # Get the current time in UTC
-      local_time = current_time.in_time_zone('Nairobi') # Convert to Nairobi's time zone
+      current_time = Time.now
+      local_time = current_time.in_time_zone('Nairobi')
 
       check_in_out = CheckInOut.create(
         check_in: local_time,
         staff_id: @current_staff.id,
-        name: @current_staff.staff_name # Set the staff_name attribute directly
+        name: @current_staff.staff_name
       )
 
       render json: {

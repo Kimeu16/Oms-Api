@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
 
   create_table "check_in_outs", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
+    t.string "duration"
     t.integer "staff_id"
     t.datetime "check_in"
     t.datetime "check_out"
