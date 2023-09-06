@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :deny_access, only: [:destroy, :create, :update, :show]
+  before_action :deny_access, only: [:create, :update, :show]
 
     # GET /  Managers
     def index
