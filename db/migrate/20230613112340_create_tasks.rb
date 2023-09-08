@@ -10,6 +10,8 @@ class CreateTasks < ActiveRecord::Migration[7.0]
       t.string :task_deadline
       t.string :avatar_image
       t.string :completed_files
+      t.string :send_type
+      t.boolean :isSeen, default: false
       t.integer :project_id, null: true, foreign_key: true
       t.integer :staff_id, null: true, foreign_key: true
 

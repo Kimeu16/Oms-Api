@@ -192,6 +192,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
     t.string "task_deadline"
     t.string "avatar_image"
     t.string "completed_files"
+    t.string "send_type"
+    t.boolean "isSeen", default: false
     t.integer "project_id"
     t.integer "staff_id"
     t.datetime "created_at", null: false

@@ -9,6 +9,10 @@ class Task < ApplicationRecord
   mount_uploader :avatar_image, AvatarUploader
   mount_uploaders :completed_files, AvatarUploader
 
+  enum send_type: { admin: 'admin', staff: 'staff' }
+
+  validates :send_type, presence: true
+
   # has_many_attached :completed_files
 
   serialize :completed_files, Array
@@ -35,4 +39,3 @@ class Task < ApplicationRecord
   end
 
 end
-

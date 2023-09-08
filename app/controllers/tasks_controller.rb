@@ -1,19 +1,90 @@
 class TasksController < ApplicationController
   before_action :authenticate_staff, only: [:index, :show, :update, :create, :upload_completed_files]
   before_action :deny_staff, only: [:edit, :destroy]
-  before_action :deny_access, only: [:show, :create, :update, :destroy]
+  before_action :deny_access, only: [ :create, :destroy]
   # before_action :authenticate_staff_or_admin, only: [:download_completed_file]
 
     # GET /tasks
-    def index
-      if current_admin
-        tasks = Task.all
+    # def index
+    #   if current_admin
+    #     tasks = Task.all
+    #   else
+    #     tasks = Task.where(assigned_to: @current_staff.staff_name)
+    #   end
+
+    #   render json: tasks, status: :ok
+    # end
+
+    # Add this action to the TasksController
+    def received_tasks
+      if current_staff
+        # If the current user is a staff member, retrieve tasks sent by admin and staff.
+        @received_tasks = Task.where(assigned_to: current_staff.staff_name, send_type: ['admin', 'staff'])
       else
-        tasks = Task.where(assigned_to: @current_staff.staff_name)
+        # Handle the case when the user is not authenticated as staff.
+        render json: { error: 'Authentication required for staff access' }, status: :unauthorized
       end
 
-      render json: tasks, status: :ok
+      render json: @received_tasks
     end
+
+# Add this action to the TasksController
+def admin_received_tasks
+  if current_admin
+    # If the current user is an admin, retrieve tasks sent by staff members.
+    @admin_received_tasks = Task.where(send_type: 'staff', task_manager: current_admin.first_name)
+  else
+    # Handle the case when the user is not authenticated as an admin.
+    render json: { error: 'Authentication required for admin access' }, status: :unauthorized
+  end
+
+  render json: @admin_received_tasks
+end
+
+# Add this action to the TasksController
+def admin_sent_tasks_to_staff
+  if current_admin
+    staff_id = params[:staff_id] # Retrieve the staff_id parameter from the URL
+    if staff_id.present?
+      # If a staff_id parameter is provided, filter tasks sent to that staff member.
+      @admin_sent_tasks = Task.where(send_type: 'admin', assigned_to: Staff.find(staff_id).staff_name)
+    else
+      # If no staff_id parameter is provided, return an empty array.
+      @admin_sent_tasks = []
+    end
+  else
+    # Handle the case when the user is not authenticated as an admin.
+    render json: { error: 'Authentication required for admin access' }, status: :unauthorized
+  end
+
+  render json: @admin_sent_tasks
+end
+
+# Add this action to the TasksController
+def admin_all_tasks
+  if current_admin
+    # If the current user is an admin, retrieve all tasks.
+    @admin_all_tasks = Task.all
+  else
+    # Handle the case when the user is not authenticated as an admin.
+    render json: { error: 'Authentication required for admin access' }, status: :unauthorized
+  end
+
+  render json: @admin_all_tasks
+end
+
+def admin_received_completed_files
+  if current_admin
+    # If the current user is an admin, retrieve completed files sent by staff.
+    @admin_received_completed_files = Task.where(send_type: 'staff')
+  else
+    # Handle the case when the user is not authenticated as an admin.
+    render json: { error: 'Authentication required for admin access' }, status: :unauthorized
+  end
+
+  render json: @admin_received_completed_files
+end
+
 
     # GET /tasks/1
     def show
@@ -32,6 +103,12 @@ class TasksController < ApplicationController
     # POST /tasks
     def create
       task = Task.new(task_params)
+
+      # Set the send_type attribute to 'admin' for tasks created by the current admin
+      if current_admin
+        task.send_type = 'admin'
+      end
+
       task.staff_id = @current_staff.id if @current_staff
 
       if task.save
@@ -40,6 +117,7 @@ class TasksController < ApplicationController
         render json: { error: task.errors.full_messages }, status: :unprocessable_entity
       end
     end
+
 
     def update
       task = Task.find_by(id: params[:id])
@@ -81,34 +159,27 @@ class TasksController < ApplicationController
       if task
         if current_staff && task.assigned_to == current_staff.staff_name
           if params[:completed_files].present?
-            puts "Task ID: #{task.id.inspect}"
-            puts "Current Staff ID: #{current_staff.id.inspect}"
-            puts "Completed Files Params: #{params[:completed_files].inspect}"
-
             # Convert the completed_files attribute to an array if it is nil or a string
             task.completed_files = [] if task.completed_files.nil? || task.completed_files.is_a?(String)
 
             # Append the new file URLs to the existing completed_files array
             new_completed_files = task.completed_files + Array(params[:completed_files])
 
-            if task.update(completed_files: new_completed_files)
-              render json: task, status: :ok
-            else
-              render json: { error: task.errors.full_messages }, status: :unprocessable_entity
-            end
+            # Set the send_type of completed_files to 'staff'
+            task.update(completed_files: new_completed_files, send_type: 'staff')
+
+            render json: task, status: :ok
           else
             render json: { error: "No completed files attached" }, status: :unprocessable_entity
           end
         else
-          puts "Current Staff: #{current_staff.inspect}"
-          puts "Task Assigned To: #{task.assigned_to.inspect}" # Add this line to check the assigned_to attribute
-
           render_unauthorized
         end
       else
         render json: { error: "Task not found" }, status: :not_found
       end
     end
+
 
     def completed_tasks
       if current_staff || current_admin
@@ -161,7 +232,7 @@ class TasksController < ApplicationController
     private
 
     def task_params
-      params.permit(:id, :avatar_image, :completed_files, :assignment_date, :task_name, :assigned_to, :task_manager, :project_manager, :project_name, :task_deadline, :project_id, :staff_id)
+      params.permit(:id, :avatar_image, :completed_files, :assignment_date, :task_name, :assigned_to, :task_manager, :project_manager, :project_name, :task_deadline, :project_id, :isSeen, :staff_id)
     end
 
     def deny_staff
@@ -181,4 +252,4 @@ class TasksController < ApplicationController
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
-  
+
