@@ -1,6 +1,7 @@
 class CreateProgresses < ActiveRecord::Migration[7.0]
   def change
     create_table :progresses do |t|
+      t.string :progress_by
       t.string :task_managed
       t.string :project_managed
       t.date :assigned_date

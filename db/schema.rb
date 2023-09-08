@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
   end
 
   create_table "progresses", charset: "utf8mb3", force: :cascade do |t|
+    t.string "progress_by"
     t.string "task_managed"
     t.string "project_managed"
     t.date "assigned_date"
@@ -150,6 +151,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
   end
 
   create_table "requests", charset: "utf8mb3", force: :cascade do |t|
+    t.string "request_by"
     t.string "request_detail"
     t.date "request_date"
     t.string "request_to"

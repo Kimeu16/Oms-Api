@@ -41,7 +41,7 @@ class ProgressesController < ApplicationController
 
       # Only allow a list of trusted parameters through.
       def progress_params
-        params.permit(:id, :project_managed, :task_managed, :assigned_date, :start_date, :exceeded_by, :delivery_time)
+        params.permit(:id, :progress_by, :project_managed, :task_managed, :assigned_date, :start_date, :exceeded_by, :delivery_time)
       end
 
       def deny_access
@@ -52,4 +52,3 @@ class ProgressesController < ApplicationController
         render json: { error: 'Unauthorized' }, status: :unauthorized
       end
 end
-
