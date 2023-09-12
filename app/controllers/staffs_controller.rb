@@ -20,8 +20,8 @@ class StaffsController < ApplicationController
     email_body = "Hello #{staff.staff_name},\n\nYou've been signed up to OMS!\n\nYour credentials:\n\nUsername: #{staff_params[:email]}\nPassword: #{pass}\n\nPlease login to the Office Management System using the following link:\nhttps://office-management-system.vercel.app"
 
     email_hash = {
-      sender_email: 'omstestemail8@gmail.com',
-      sender_password: 'nwhoqqdfalraychl',
+      sender_email: 'bharathbrands23@gmail.com',
+      sender_password: 'kcjjqpnvziykvmtn',
       recipient_email: staff_params[:email],
       subject: "Account Created Successfully!",
       body: email_body
