@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :events do
+    get 'download_document', on: :member, to: 'events#download_document', as: 'download_document'
+  end
+
   # Mount ActionCable for WebSocket communication
   mount ActionCable.server => '/cable'
 
@@ -72,6 +77,7 @@ Rails.application.routes.draw do
   resources :progresses
 
 
+
  # Routes for staff members
  resources :staffs do
   member do
@@ -112,4 +118,5 @@ get "/mi", to: "admins#mi"
 
 # Route for generating a password for an admin
 get "/gen_pass/:id", to: "admins#gen_pass"
+get "/gen_pass/:id", to: "events#gen_pass"
 end

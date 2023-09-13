@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_13_095101) do
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -57,6 +57,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_203710) do
     t.string "task_detail"
     t.string "progress_details"
     t.string "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", charset: "utf8mb3", force: :cascade do |t|
+    t.date "date"
+    t.time "time"
+    t.string "agenda"
+    t.string "host"
+    t.string "trainer"
+    t.string "documents"
+    t.string "email"
+    t.string "meeting_link"
+    t.integer "staff_id"
+    t.integer "client_id"
+    t.integer "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
