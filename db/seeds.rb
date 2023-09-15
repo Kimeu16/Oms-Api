@@ -1,6 +1,6 @@
 puts "Seeding..."
 
-admin1 = Admin.create(first_name: "Gideon", last_name: "Langat", email: "langat@gmail.com", password: "password", isadmin: true)
+admin1 = Admin.create(first_name: "Anthony", last_name:"Kimeu", email: "tkymeu@gmail.com", password: "12345678", isadmin: true)
 
 manager1 = Manager.create(f_name: "Gideon", l_name: "Langat", managers_title: "Project Manager", email: "manager@gmail.com")
 
