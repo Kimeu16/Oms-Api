@@ -45,7 +45,7 @@ class EventsController < ApplicationController
     sender_email: 'omstestemail8@gmail.com',
     sender_password: 'nwhoqqdfalraychl',
     recipient_email: selected_staff_emails, # Use the list of selected staff emails
-    subject: "BRATHRAND EMAIL INVITE!",
+    subject: "BHARATHBRANDS EMAIL INVITE!",
     body: email_body
   }
 
@@ -62,6 +62,12 @@ end
       event = Event.find(params[:id])
       file_path = event.documents.path
       send_file file_path, disposition: 'attachment'
+  end
+
+  def update
+    event = set_event
+    event.update(event_params)
+    render json: event, status: :created
   end
 
   def destroy
@@ -132,4 +138,3 @@ end
       end
 
 end
-

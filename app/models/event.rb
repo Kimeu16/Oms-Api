@@ -1,14 +1,10 @@
 class Event < ApplicationRecord
 
   belongs_to :staff, optional: true
-  belongs_to :manager, optional: true
-  belongs_to :client, optional: true
-  # has_many_attached :documents
 
   validate :validate_documents_format
 
-  mount_uploader :documents, AvatarUploader # Use mount_uploaders instead of mount_uploader
-#   serialize :documents, JSON
+  mount_uploader :documents, AvatarUploader
 
   private
 

@@ -22,14 +22,13 @@ class MessagesController < ApplicationController
 
     render json: @sent_messages
   end
-
   def received_messages
     if current_staff
       # If the current user is a staff member, retrieve messages received by them.
       @received_messages = Message.where(staff_id: current_staff.id, sender_type: 'admin')
     elsif current_admin
       # If the current user is an admin, retrieve messages received by them.
-      staff_id = params[:staff_id] # Retrieve the staff_id parameter from the URL
+      staff_id = params[:staff_id]
       if staff_id.present?
         # If a staff_id parameter is provided, filter by that staff member.
         @received_messages = Message.where(admin_id: current_admin.id, sender_type: 'staff', staff_id: staff_id)

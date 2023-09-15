@@ -2,7 +2,7 @@ puts "Seeding..."
 
 admin1 = Admin.create(first_name: "Anthony", last_name: "Kimeu", email: "tkymeu@gmail.com", password: "12345678", isadmin: true)
 
-manager1 = Manager.create(first_name: "Moses", last_name: "Kuria", title: "CEO")
+manager1 = Manager.create(f_name: "Gideon", l_name: "Langat", managers_title: "Project Manager", email: "manager@gmail.com")
 
 staff1 = Staff.create(staff_name: "Robby", joining_date: Date.tomorrow, reporting_to: "CEO", email: "robby@gmail.com", password: "password", designation: "React & Rails", isStaff: true, admin_id: admin1.id, manager_id: manager1.id)
 

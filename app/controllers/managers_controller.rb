@@ -41,7 +41,7 @@ class ManagersController < ApplicationController
 
       # Only allow a list of trusted parameters through.
       def manager_params
-        params.permit(:id, :first_name, :last_name, :title)
+        params.permit(:id, :f_name, :l_name, :managers_title, :email)
       end
 
       def deny_access

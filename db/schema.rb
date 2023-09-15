@@ -111,9 +111,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_095101) do
   end
 
   create_table "managers", charset: "utf8mb3", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "title"
+    t.string "f_name"
+    t.string "l_name"
+    t.string "managers_title"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
