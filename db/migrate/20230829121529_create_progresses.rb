@@ -10,7 +10,6 @@ class CreateProgresses < ActiveRecord::Migration[7.0]
       t.date :delivery_time
       t.integer :staff_id, null: true, foreign_key: true
 
-      
       t.timestamps
     end
   end
